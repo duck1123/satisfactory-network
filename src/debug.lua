@@ -53,10 +53,27 @@ function debugNetwork(c)
 end
 
 function debugInventory(inv)
-   -- print("Debugging inventory: " .. tostring(inv))
    local itemCount = inv.itemCount
    print("item count: " .. itemCount .. " / " .. inv.size)
-   -- printMembers(inv)
+
+   for x=1,inv.size do
+      local msg = "  " .. x .. ": "
+      local _, stack = inv:getStack(x)
+      
+      if (stack ~= null) then
+	 local item = stack.item
+
+	 if (item ~= null) then
+	    msg = msg .. tostring(item.type) .. " - " .. stack.count
+	 else
+	    msg = msg .. "no item"
+	 end
+      else
+	 msg = msg .. "empty"
+      end
+
+      print(msg)
+   end
 end
 
 
@@ -115,3 +132,6 @@ function doSplitterInfo(selector)
    end
 end
 
+function debugComponent(c)
+   printMembers(c)
+end
