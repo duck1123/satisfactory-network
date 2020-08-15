@@ -13,7 +13,17 @@ function debugTable(t)
 end
 
 function printMembers(c)
-   print("Printing members for " .. tostring(c))
+   -- loc, loc2 = c:getLocation()
+
+   -- print(loc)
+   -- print(lo2)
+
+   print(
+      "Printing members for "
+	 .. tostring(c)
+	 -- .. " = "
+	 -- .. c.nick
+   )
    local members = c:getMembers()
    debugTable(members)
 end
@@ -23,6 +33,11 @@ function debugComponents(components)
       -- print(c)
       printMembers(c)
    end
+end
+
+function debugTypes(c)
+   local types = c:getTypes()
+   debugTable(types)
 end
 
 function debugConnectors(panel)
@@ -37,11 +52,31 @@ function debugNetwork(c)
    debugTable(connectors)
 end
 
-function debugInventories(com)
-   -- print(com:getInventories())
+function debugInventory(inv)
+   -- print("Debugging inventory: " .. tostring(inv))
+   local itemCount = inv.itemCount
+   print("item count: " .. itemCount .. " / " .. inv.size)
+   -- printMembers(inv)
+end
+
+
+function debugInventories(com, verbose)
+   -- print("debugging inventories for " .. tostring(com))
+
+   if (verbose == null or verbose) then
+      print(tostring(com) .. ": ")
+   end
+
    local inventories = com:getInventories()
-   print(inventories)
-   debugTable(inventories)
+
+   for i, inv in pairs(inventories) do
+      if (verbose == null or verbose) then
+	 print("inventory " .. i .. ": ")
+      end
+
+      -- print(inv)
+      debugInventory(inv)
+   end
 end
 
 function debugModules(component)
@@ -68,13 +103,6 @@ function debugGpus(screen)
       gpu:flush()
    end
 end
-
-function debugInventory(inv)
-   print("Debugging inventory: " .. tostring(inv))
-
-   printMembers(inv)
-end
-
 
 function doSplitterInfo(selector)
    local splitters = getComponents(selector)

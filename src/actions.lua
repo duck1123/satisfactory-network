@@ -89,3 +89,13 @@ function disableIron()
    ironPole3:setConnected(false)
 end
 
+function storageReport(verbose)
+   verbose = verbose == true
+
+   for name, id in pairs(storage) do
+      print(name .. ": ")
+      local c = component.proxy(id)
+
+      debugInventories(c, verbose)
+   end
+end
