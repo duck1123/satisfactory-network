@@ -1,3 +1,25 @@
+function readData(filename)
+  local f = filesystem.open(filename, "r")
+  local l = f:read("*all")
+  f:close()
+  return l
+end
+
+function writeData(filename, data)
+  local f = filesystem.open(filename, "w")
+  f:write(data)
+  f:close()
+end
+
+function appendData(filename, data)
+   local oldData = readData(filename)
+   writeData(filename, oldData .. data)
+end
+
+function log(data)
+   appendData(logFile, computer.time() .. " - " .. data .. "\n")
+end
+
 function getComponents(selector)
    return component.proxy(component.findComponent(selector))
 end
@@ -72,6 +94,7 @@ function debugInventory(inv)
 	 msg = msg .. "empty"
       end
 
+      log(msg)
       print(msg)
    end
 end
@@ -140,31 +163,4 @@ logFile = "/log.txt"
 
 function listFiles()
    debugTable(filesystem.childs("/"))
-end
-
-function readData(filename)
-  print("reading")
-  local f = filesystem.open(filename, "r")
-  local l = f:read("*all")
-  f:close()
-  print("read")
-  return l
-end
-
-function writeData(filename, data)
-  print("writing" .. filename)
-  local f = filesystem.open(filename, "w")
-  f:write(data)
-  f:close()
-  print("written")
-end
-
-function appendData(filename, data)
-   local oldData = readData(filename)
-   print(oldData)
-   writeData(filename, oldData .. data)
-end
-
-function log(data)
-   appendData(logFile, data .. "\n")
 end

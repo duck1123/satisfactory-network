@@ -44,13 +44,12 @@ function doEventLoop(panel, indicator)
       if e == "Trigger" then
       	-- indicator:setColor(0, 1, 0, 5)
       	computer.beep()
-      
-      	local switch = getComponent("Power 3")
-	printMembers(switch)
-      	local connected = switch:isConnected()
-	print(connected)
-	
-      	switch:setConnected(not(connected))
+	log("beep")
+      	-- local switch = getComponent("Power 3")
+	-- printMembers(switch)
+      	-- local connected = switch:isConnected()
+	-- print(connected)
+      	-- switch:setConnected(not(connected))
       	-- indicator:setColor(1, 0, 0, 5)
       end
    end
