@@ -22,57 +22,61 @@ function log(data)
    appendData(logFile, computer.time() .. " - " .. data .. "\n")
 end
 
-function addMessage(message)
-   local outboxDir = config.outboxDir
-
-   if (not filesystem.exists(outboxDir)) then
-      print("creating directory")
-      filesystem.createDir(outboxDir)
-   end
-
+function findAvailableFile(baseDir)
    local id = math.floor(computer.time() * 10)
    local index = 0
    local path
    local exists = true
 
    while exists do
-      print(id .. "-" .. index)
-
-      path = outboxDir
-         .. "/"
-         .. id
-         .. "-"
-         .. index
-         .. ".txt"
+      path = string.format(
+         "%s/%s-%s.txt",
+         outboxDir,
+         id,
+         index
+      )
 
       exists = filesystem.exists(path)
       index = index + 1
-      -- if filesystem.exists(path) then
-      --    print("already exists")
-      -- end
-
    end
 
+   return path
+end
 
+function assertDirectory(path)
+   if (not filesystem.exists(path)) then
+      filesystem.createDir(path)
+   end
+
+   return path
+end
+
+function addMessage(message)
+   local outboxDir = assertDirectory(config.outboxDir)
+   local path = findAvailableFile(outboxDir)
    writeData(path, message)
 end
 
 function processMessage(path)
-   -- print("processing message: " .. path);
    local data = readData(path)
-   print(data)
+
+   print(
+      string.format(
+         "processing message: %s - %s",
+         path,
+         data
+      )
+   )
+
    return data
 end
 
 function processInbox()
-   print("listing inbox")
    local path = config.outboxDir
    local messages = filesystem.childs(path)
-   -- debugTable(messages)
 
    for _, fileName in pairs(messages) do
       local fullPath = path .. "/" .. fileName
-      print(fileName)
       processMessage(fullPath)
       filesystem.remove(fullPath)
    end
