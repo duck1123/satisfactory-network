@@ -47,14 +47,16 @@ function doEventLoop(panel, indicator)
          y = 5,
          name = "button1"
       },
-      {
-         x = 5,
-         y = 5,
-         name = "button2"
-      }
+      -- {
+      --    x = 5,
+      --    y = 5,
+      --    name = "button2"
+      -- }
    }
 
    local buttons = {}
+
+   local lastButton
 
    for _, def in pairs(buttonDefs) do
       local button = panel:getModule(def.x, def.y)
@@ -62,12 +64,14 @@ function doEventLoop(panel, indicator)
       if button ~= null then
          event.listen(button)
          buttons[button] = def.name
+         print(buttons[button])
+         lastButton = button
       else
          print("no button")
       end
    end
 
-   debugTable(buttons)
+   -- debugTable(buttons)
 
    while true do
       computer.skip()
@@ -75,9 +79,14 @@ function doEventLoop(panel, indicator)
 
       if eventName == "Trigger" then
          print(button)
-         debugTable(buttons)
-         local buttonName = buttons[button] or "unknown"
-         handleButtonTrigger(eventName, button, arg1, buttonName)
+         print("Is last button: " .. tostring(button == lastButton))
+         -- debugTable(buttons)
+         local buttonName = buttons[button]
+         print(buttonName)
+         local lastButtonName = buttons[lastButton]
+         print(lastButton)
+
+         handleButtonTrigger(eventName, button, arg1, buttonName or "unknown")
       end
    end
 end
