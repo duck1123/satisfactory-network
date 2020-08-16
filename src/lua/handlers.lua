@@ -15,11 +15,13 @@ end
 function handleButton2(eventName, button, arg1, def)
    -- print("button2")
    -- debugTable(def)
-   doProcessInbox()
+   -- doProcessInbox()
+   addMessage("ping")
 end
 
 function handleButton3(eventName, button, arg1, def)
    print("button3")
+   addMessage("foo")
    -- debugTable(def)
    -- doProcessInbox()
 end

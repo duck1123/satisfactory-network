@@ -13,7 +13,15 @@
               files (file-seq (io/file outbox-dir))]
           (doseq [file files]
             (when (.isFile file)
-              (println (str (.getAbsolutePath file) " - " (slurp file)))
+              (let [message (slurp file)]
+                (println (str (.getName file) " - " message))
+
+                (let [inbox (io/file (env :inbox))
+                      id (inst-ms (java.util.Date.))
+                      outfile (io/file inbox (str id ".txt"))]
+                  (if (= message "ping")
+                    (spit outfile "pong")
+                    (spit outfile (str "ECHO: " message)))))
               (.delete file))))))
     (catch Exception e
       (println e))))
