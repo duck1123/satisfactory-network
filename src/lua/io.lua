@@ -70,7 +70,33 @@ function processMessage(path)
       )
    )
 
-   computer.beep()
+   if data == "pong" then
+      computer.beep()
+   end
+
+   if data == "lights-out" then
+      print("lights out")
+
+      for _, id in pairs(registry.lights) do
+         local light = component.proxy(id)
+         light:setMode(0)
+         print(light:getMode())
+         -- printMembers(light)
+
+      end
+   end
+
+   if data == "lights-on" then
+      print("lights on")
+
+      for _, id in pairs(registry.lights) do
+         local light = component.proxy(id)
+         light:setMode(1)
+         print(light:getMode())
+         -- printMembers(light)
+      end
+
+   end
 
    return data
 end

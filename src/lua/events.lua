@@ -37,7 +37,7 @@ function handleButtonTrigger(eventName, button, arg1, def)
    end
 
    -- log("beep")
-   computer.beep()
+   -- computer.beep()
 end
 
 function doEventLoop()

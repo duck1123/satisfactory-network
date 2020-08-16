@@ -9,7 +9,8 @@ function handleButton1(eventName, button, arg1, def)
    --    )
    -- )
    -- debugTable(def)
-   doFloodMessages()
+   addMessage("lights-on")
+   -- doFloodMessages()
 end
 
 function handleButton2(eventName, button, arg1, def)
@@ -21,7 +22,7 @@ end
 
 function handleButton3(eventName, button, arg1, def)
    print("button3")
-   addMessage("foo")
+   addMessage("lights-out")
    -- debugTable(def)
    -- doProcessInbox()
 end

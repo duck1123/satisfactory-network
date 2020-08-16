@@ -41,7 +41,8 @@ registry = {
    },
 
    lights = {
-      "BE2AFFD84D055C842BDCDBB658E7440E"
+      -- "BE2AFFD84D055C842BDCDBB658E7440E"
+      "770C6CB84D30FBEB03F75EBE790B876B",
    },
 
    miners = {

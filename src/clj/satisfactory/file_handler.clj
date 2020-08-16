@@ -21,7 +21,7 @@
                       outfile (io/file inbox (str id ".txt"))]
                   (if (= message "ping")
                     (spit outfile "pong")
-                    (spit outfile (str "ECHO: " message)))))
+                    (spit outfile message))))
               (.delete file))))))
     (catch Exception e
       (println e))))
