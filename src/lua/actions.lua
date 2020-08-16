@@ -22,52 +22,105 @@ function doIndicator(selector)
    end
 end
 
-function handleButtonTrigger(eventName, button, arg1, buttonName)
-   print("Handling button trigger: "
-            .. tostring(eventName)
-            .. ", "
-            .. tostring(button)
-            .. ", "
-            .. buttonName
-            .. ", "
-            .. tostring(arg1))
+function handleButtonTrigger(eventName, button, arg1, path)
+   print(
+      string.format(
+         "Handling button trigger: %s, %s, %s, %s",
+         eventName,
+         button,
+         path,
+         arg1
+      )
+   )
 
-   -- printMembers(button)
-   computer.beep()
+   if path ~= null then
+      local matchedDef = null
+
+      for _, def in pairs(registry.buttons) do
+         if matchedDef == null and def.path == path then
+            matchedDef = def
+         end
+      end
+
+      if matchedDef ~= null then
+         print(matchedDef.message)
+      else
+         print("no def")
+      end
+   else
+      print("Path is not provided")
+   end
+
    -- log("beep")
+   computer.beep()
+end
+
+function floodMessages()
+   addMessage(computer.time())
+   addMessage("a")
+   addMessage("b")
+   addMessage("c")
 end
 
 
-function doEventLoop(panel, indicator)
+function parsePath(path)
+   -- print("Parsing path: " .. tostring(path))
+   local pathInfo = {}
+   local searchTable = registry
+   local segments = {}
+
+   for panelPath,_ in string.gmatch(path, "(.+)%[") do
+      for segment,_ in string.gmatch(panelPath, "(%w+)") do
+         table.insert(segments, segment)
+      end
+   end
+
+   -- reduce segments to find the definition that matches the path
+   for k, v in pairs(segments) do
+      local subpath = searchTable[v]
+      searchTable = subpath
+   end
+
+   pathInfo.id = searchTable.id
+
+   -- Parse button coordinates
+   for k, v in string.gmatch(path, "(%d+),(%d+)") do
+      pathInfo.x = k
+      pathInfo.y = v
+   end
+
+   return pathInfo
+end
+
+function listButtons()
+   for _, def in pairs(registry.buttons) do
+      local path = def.path
+      local pathInfo = parsePath(path)
+      debugTable(pathInfo)
+   end
+end
+
+function doEventLoop()
    print("starting event loop")
 
-   local buttonDefs = {
-      {
-         x = 2,
-         y = 5,
-         name = "button1"
-      },
-      -- {
-      --    x = 5,
-      --    y = 5,
-      --    name = "button2"
-      -- }
-   }
+   local registeredButtons = {}
 
-   local buttons = {}
+   for _, def in pairs(registry.buttons) do
+      local path = def.path
+      local pathInfo = parsePath(path)
+      local panel = component.proxy(pathInfo.id)
 
-   local lastButton
+      if panel ~= null then
+         local button = panel:getModule(pathInfo.x, pathInfo.y)
 
-   for _, def in pairs(buttonDefs) do
-      local button = panel:getModule(def.x, def.y)
-
-      if button ~= null then
-         event.listen(button)
-         buttons[button] = def.name
-         print(buttons[button])
-         lastButton = button
+         if button ~= null then
+            event.listen(button)
+            registeredButtons[path] = button
+         else
+            print("no button")
+         end
       else
-         print("no button")
+         print("Could not find panel")
       end
    end
 
@@ -78,15 +131,15 @@ function doEventLoop(panel, indicator)
       eventName, button, arg1 = event.pull(1)
 
       if eventName == "Trigger" then
-         print(button)
-         print("Is last button: " .. tostring(button == lastButton))
-         -- debugTable(buttons)
-         local buttonName = buttons[button]
-         print(buttonName)
-         local lastButtonName = buttons[lastButton]
-         print(lastButton)
+         local matchedPath = null
 
-         handleButtonTrigger(eventName, button, arg1, buttonName or "unknown")
+         for path, candidateButton in pairs(registeredButtons) do
+            if matchedPath == null and button == candidateButton then
+               matchedPath = path
+            end
+         end
+
+         handleButtonTrigger(eventName, button, arg1, matchedPath)
       end
    end
 end

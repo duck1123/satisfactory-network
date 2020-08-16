@@ -8,6 +8,18 @@ registry = {
       "91A395974BEA70148C9A49A0A4449E06",
    },
 
+   buttons = {
+      {
+         path = "panels.main[2,5]",
+         message = "foo",
+
+      },
+      {
+         path = "panels.main[5,5]",
+         message = "bar",
+      }
+   },
+
    computers = {
       main = "D71ED6D54F6D9DC705D380BD19E4D34F",
       floor2 = "CCAB02D9441F2A2CCF42FAA698AF8C0A"
