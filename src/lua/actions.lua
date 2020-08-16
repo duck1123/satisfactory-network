@@ -20,9 +20,9 @@ end
 
 function doFloodMessages()
    addMessage(computer.time())
-   addMessage("a")
-   addMessage("b")
-   addMessage("c")
+   -- addMessage("a")
+   -- addMessage("b")
+   -- addMessage("c")
 end
 
 function doIndicator(selector)
