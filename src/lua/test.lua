@@ -27,7 +27,7 @@ function main()
 
    -- printMembers(panel)
 
-   debugModules(panel)
+   -- debugModules(panel)
    -- debugGpus(screen)
    -- debugConnectors(panel)
    -- debugNetwork(panel)
