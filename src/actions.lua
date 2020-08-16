@@ -35,22 +35,22 @@ function doEventLoop(panel, indicator)
    while true do
       computer.skip()
       e, s, arg1 = event.pull(1)
-      
+
       -- if (e ~= nil) then
-      -- 	 computer.beep()
-      -- 	print(e)
+      --      computer.beep()
+      --     print(e)
       -- end
-      
+
       if e == "Trigger" then
-      	-- indicator:setColor(0, 1, 0, 5)
-      	computer.beep()
-	log("beep")
-      	-- local switch = getComponent("Power 3")
-	-- printMembers(switch)
-      	-- local connected = switch:isConnected()
-	-- print(connected)
-      	-- switch:setConnected(not(connected))
-      	-- indicator:setColor(1, 0, 0, 5)
+         -- indicator:setColor(0, 1, 0, 5)
+         computer.beep()
+         log("beep")
+         -- local switch = getComponent("Power 3")
+         -- printMembers(switch)
+         -- local connected = switch:isConnected()
+         -- print(connected)
+         -- switch:setConnected(not(connected))
+         -- indicator:setColor(1, 0, 0, 5)
       end
    end
 end

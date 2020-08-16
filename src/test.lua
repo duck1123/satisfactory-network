@@ -1,9 +1,9 @@
 -- function initFilesystem()
---   print("init filesystem")
---   filesystem.initFileSystem("/dev")
---   filesystem.mount("/dev/" .. filesystem.childs("/dev")[1], "/")
---   local status = pcall(filesystem.doFile, "/test.lua")
---   print(status)
+--    print("init filesystem")
+--    filesystem.initFileSystem("/dev")
+--    filesystem.mount("/dev/" .. filesystem.childs("/dev")[1], "/")
+--    local status = pcall(filesystem.doFile, "/test.lua")
+--    print(status)
 -- end
 
 -- function myerrorhandler( err )
@@ -13,7 +13,7 @@
 -- if xpcall(initFilesystem, myerrorhandler) then
 --    print("Success loading")
 -- else
--- 	print("Failure loading")
+--    print("Failure loading")
 -- end
 
 -- main()
@@ -22,11 +22,11 @@ function main()
    -- print("Hello World")
    local panel = getComponent("Panel")
    local indicator = getComponent("Indicator")
-   
+
    local screen = panel:getModule(0, 0)
-   
+
    -- printMembers(panel)
-   
+
    debugModules(panel)
    -- debugGpus(screen)
    -- debugConnectors(panel)
@@ -34,7 +34,7 @@ function main()
    -- debugInventories(panel)
 
    -- doPower("Power")
-  
+
    -- doSplitterInfo("Splitter")
    -- doIndicator("Indicator")
 
@@ -53,7 +53,7 @@ end
 -- print(pipeStorage.nick)
 -- debugTable(storage)
 
--- inv1 = pipeStorage:getInventories()[1] 
+-- inv1 = pipeStorage:getInventories()[1]
 -- debugInventory(inv1)
 -- printMembers(inv1)
 -- print(inv1.size)

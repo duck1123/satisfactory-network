@@ -1,14 +1,14 @@
 function readData(filename)
-  local f = filesystem.open(filename, "r")
-  local l = f:read("*all")
-  f:close()
-  return l
+   local f = filesystem.open(filename, "r")
+   local l = f:read("*all")
+   f:close()
+   return l
 end
 
 function writeData(filename, data)
-  local f = filesystem.open(filename, "w")
-  f:write(data)
-  f:close()
+   local f = filesystem.open(filename, "w")
+   f:write(data)
+   f:close()
 end
 
 function appendData(filename, data)
@@ -42,9 +42,9 @@ function printMembers(c)
 
    print(
       "Printing members for "
-	 .. tostring(c)
-	 -- .. " = "
-	 -- .. c.nick
+         .. tostring(c)
+      -- .. " = "
+      -- .. c.nick
    )
    local members = c:getMembers()
    debugTable(members)
@@ -81,24 +81,23 @@ function debugInventory(inv)
    for x=1,inv.size do
       local msg = "  " .. x .. ": "
       local _, stack = inv:getStack(x)
-      
-      if (stack ~= null) then
-	 local item = stack.item
 
-	 if (item ~= null) then
-	    msg = msg .. tostring(item.type) .. " - " .. stack.count
-	 else
-	    msg = msg .. "no item"
-	 end
+      if (stack ~= null) then
+         local item = stack.item
+
+         if (item ~= null) then
+            msg = msg .. tostring(item.type) .. " - " .. stack.count
+         else
+            msg = msg .. "no item"
+         end
       else
-	 msg = msg .. "empty"
+         msg = msg .. "empty"
       end
 
-      log(msg)
+      -- log(msg)
       print(msg)
    end
 end
-
 
 function debugInventories(com, verbose)
    -- print("debugging inventories for " .. tostring(com))
@@ -111,7 +110,7 @@ function debugInventories(com, verbose)
 
    for i, inv in pairs(inventories) do
       if (verbose == null or verbose) then
-	 print("inventory " .. i .. ": ")
+         print("inventory " .. i .. ": ")
       end
 
       -- print(inv)
@@ -123,12 +122,12 @@ function debugModules(component)
    print("debugging modules: " .. tostring(component))
    for x=0,10 do
       for y=0,10 do
-	 local c = component:getModule(x,y)
+         local c = component:getModule(x,y)
 
-	 if c ~= nuil then
-	    print("x: " .. x .. ", y=" .. y .. ", c=" .. tostring(c))
-	    -- printMembers(c)
-	 end
+         if c ~= nuil then
+            print("x: " .. x .. ", y=" .. y .. ", c=" .. tostring(c))
+            -- printMembers(c)
+         end
       end
    end
 end

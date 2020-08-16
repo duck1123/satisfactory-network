@@ -6,4 +6,3 @@ function init()
    filesystem.doFile("/test.lua")
    -- print("done")
 end
-   
