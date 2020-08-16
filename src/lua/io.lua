@@ -70,6 +70,11 @@ function processMessage(path)
       )
    )
 
+   if data == "panic" then
+      local c = component.proxy(registry.speakers[1])
+      c:playSound("alarm")
+   end
+
    if data == "pong" then
       computer.beep()
    end

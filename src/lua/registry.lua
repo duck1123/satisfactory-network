@@ -27,7 +27,7 @@ registry = {
       {
          action = "handleMessageButton",
          path = "panels.panel2[1,5]",
-         message = "button4"
+         message = "panic"
       },
       {
          action = "handleMessageButton",
@@ -120,7 +120,7 @@ registry = {
    },
 
    speakers = {
-      "48AA1E05430F56C4FEE2E09B390CA63C"
+      "12164ED44F7E14A548935CBB0FA7FF6D"
    },
 
    stations = {
