@@ -49,11 +49,23 @@ function doEventLoop()
 
    while true do
       computer.skip()
-      eventName, button, arg1 = event.pull(1)
+      eventName, button, arg1, arg2, arg3, arg4 = event.pull(1)
 
-      if eventName == "Trigger" then
-         local def = findButtonDef(registeredButtons, button)
-         handleButtonTrigger(eventName, button, arg1, def)
+      if eventName ~= null then
+         print(eventName)
+
+         if eventName == "FileSystemUpdate" then
+            print(button)
+            print(arg1)
+            print(arg2)
+            print(arg3)
+            print(arg4)
+         end
+
+         if eventName == "Trigger" then
+            local def = findButtonDef(registeredButtons, button)
+            handleButtonTrigger(eventName, button, arg1, def)
+         end
       end
    end
 end
