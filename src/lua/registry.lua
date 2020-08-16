@@ -43,6 +43,7 @@ registry = {
    },
 
    commands = {
+      ["get-name"] = "doGetName",
       ["lights-on"] = "doLightsOn",
       ["lights-out"] = "doLightsOut",
       ["panic"] = "doPanic",

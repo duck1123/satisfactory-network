@@ -84,6 +84,16 @@ function doStorageReport(verbose)
 end
 
 actions = {
+   doGetName = function(path, data)
+      print(
+         string.format(
+            "get name: %s = %s",
+            path,
+            data
+         )
+      )
+   end,
+
    doLightsOut = function()
       print("lights out")
 
