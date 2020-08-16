@@ -70,5 +70,7 @@ function processMessage(path)
       )
    )
 
+   computer.beep()
+
    return data
 end

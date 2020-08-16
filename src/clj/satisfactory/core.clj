@@ -1,12 +1,15 @@
 (ns satisfactory.core
   (:require
+   [satisfactory.file-handler :as fh]
     [satisfactory.handler :as handler]
     [satisfactory.nrepl :as nrepl]
     [luminus.http-server :as http]
     [satisfactory.config :refer [env]]
     [clojure.tools.cli :refer [parse-opts]]
     [clojure.tools.logging :as log]
-    [mount.core :as mount])
+    [mount.core :as mount]
+    [watch.man :as wm]
+    )
   (:gen-class))
 
 ;; log uncaught exceptions in threads
@@ -25,7 +28,7 @@
   :start
   (http/start
     (-> env
-        (update :io-threads #(or % (* 2 (.availableProcessors (Runtime/getRuntime))))) 
+        (update :io-threads #(or % (* 2 (.availableProcessors (Runtime/getRuntime)))))
         (assoc  :handler (handler/app))
         (update :port #(or (-> env :options :port) %))))
   :stop
@@ -40,6 +43,13 @@
   (when repl-server
     (nrepl/stop repl-server)))
 
+(mount/defstate file-watcher
+  :start
+  (wm/watch! (env :outbox) fh/handle-event)
+
+  :stop
+  (when file-watcher
+    wm/close file-watcher))
 
 (defn stop-app []
   (doseq [component (:stopped (mount/stop))]
