@@ -22,6 +22,24 @@ function doIndicator(selector)
    end
 end
 
+function handleButtonTrigger(e, s, arg1)
+   print("Handling button trigger: "
+            .. tostring(e)
+            .. ", "
+            .. tostring(s)
+            .. ", "
+            .. tostring(arg1))
+   -- indicator:setColor(0, 1, 0, 5)
+   computer.beep()
+   log("beep")
+   -- local switch = getComponent("Power 3")
+   -- printMembers(switch)
+   -- local connected = switch:isConnected()
+   -- print(connected)
+   -- switch:setConnected(not(connected))
+   -- indicator:setColor(1, 0, 0, 5)
+end
+
 
 function doEventLoop(panel, indicator)
    -- event.listen(panel)
@@ -42,15 +60,7 @@ function doEventLoop(panel, indicator)
       -- end
 
       if e == "Trigger" then
-         -- indicator:setColor(0, 1, 0, 5)
-         computer.beep()
-         log("beep")
-         -- local switch = getComponent("Power 3")
-         -- printMembers(switch)
-         -- local connected = switch:isConnected()
-         -- print(connected)
-         -- switch:setConnected(not(connected))
-         -- indicator:setColor(1, 0, 0, 5)
+         handleButtonTrigger(e, s, arg1)
       end
    end
 end
