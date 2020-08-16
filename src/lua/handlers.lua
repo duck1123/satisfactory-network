@@ -13,6 +13,10 @@ function handleButton1(eventName, button, arg1, def)
    -- doFloodMessages()
 end
 
+function handleMessageButton(eventName, button, arg1, def)
+   addMessage(def.message)
+end
+
 function handleButton2(eventName, button, arg1, def)
    -- print("button2")
    -- debugTable(def)

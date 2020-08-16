@@ -24,6 +24,22 @@ registry = {
          action = "handleButton3",
          path = "panels.main[8,5]",
       },
+      {
+         action = "handleMessageButton",
+         path = "panels.panel2[1,5]",
+         message = "button4"
+      },
+      {
+         action = "handleMessageButton",
+         path = "panels.panel2[5,5]",
+         message = "button5"
+      },
+      {
+         action = "handleMessageButton",
+         path = "panels.panel2[9,5]",
+         message = "button6"
+      },
+
    },
 
    computers = {
@@ -60,6 +76,9 @@ registry = {
    panels = {
       main = {
          id = "BBD7267948EDA66FAE13678C1BFD1421"
+      },
+      panel2 = {
+         id = "148F6D4542B309BC461141A621350803"
       }
    },
 
@@ -98,6 +117,10 @@ registry = {
          "CE9B96EB4BBDB870DCBA3198DDED1750",
          "A364C40443FFEABAA3B8AD94BD67EFA6"
       }
+   },
+
+   speakers = {
+      "48AA1E05430F56C4FEE2E09B390CA63C"
    },
 
    stations = {
