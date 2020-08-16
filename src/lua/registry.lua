@@ -19,7 +19,11 @@ registry = {
          action = "handleButton2",
          path = "panels.main[5,5]",
          message = "bar",
-      }
+      },
+      {
+         action = "handleButton3",
+         path = "panels.main[8,5]",
+      },
    },
 
    computers = {

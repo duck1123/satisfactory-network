@@ -17,3 +17,9 @@ function handleButton2(eventName, button, arg1, def)
    -- debugTable(def)
    doProcessInbox()
 end
+
+function handleButton3(eventName, button, arg1, def)
+   print("button3")
+   -- debugTable(def)
+   -- doProcessInbox()
+end

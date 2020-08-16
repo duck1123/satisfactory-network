@@ -49,17 +49,24 @@ function doEventLoop()
 
    while true do
       computer.skip()
-      eventName, button, arg1, arg2, arg3, arg4 = event.pull(1)
+      eventName, button, arg1, arg2, arg3 = event.pull(1)
 
       if eventName ~= null then
-         print(eventName)
-
          if eventName == "FileSystemUpdate" then
-            print(button)
-            print(arg1)
-            print(arg2)
-            print(arg3)
-            print(arg4)
+            -- print(
+            --    string.format(
+            --       "%s - %s - %s - %s",
+            --       button,
+            --       arg1,
+            --       arg2,
+            --       arg3
+
+            --    )
+            -- )
+
+            if arg1 == 0 then
+               doProcessInbox()
+            end
          end
 
          if eventName == "Trigger" then
