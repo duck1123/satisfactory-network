@@ -8,6 +8,7 @@ function readData(filename)
 end
 
 function writeData(filename, data)
+   -- print(string.format("Writing data: %s = %s", filename, data))
    local f = filesystem.open(filename, "w")
    f:write(data)
    f:close()
@@ -19,7 +20,7 @@ function appendData(filename, data)
 end
 
 function log(data)
-   appendData(logFile, computer.time() .. " - " .. data .. "\n")
+   appendData(config.logFile, computer.time() .. " - " .. data .. "\n")
 end
 
 function findAvailableFile(baseDir)
@@ -31,7 +32,7 @@ function findAvailableFile(baseDir)
    while exists do
       path = string.format(
          "%s/%s-%s.txt",
-         outboxDir,
+         baseDir,
          id,
          index
       )
@@ -45,6 +46,7 @@ end
 
 function assertDirectory(path)
    if (not filesystem.exists(path)) then
+      print("creating path: " .. path)
       filesystem.createDir(path)
    end
 
@@ -69,15 +71,4 @@ function processMessage(path)
    )
 
    return data
-end
-
-function processInbox()
-   local path = config.outboxDir
-   local messages = filesystem.childs(path)
-
-   for _, fileName in pairs(messages) do
-      local fullPath = path .. "/" .. fileName
-      processMessage(fullPath)
-      filesystem.remove(fullPath)
-   end
 end
