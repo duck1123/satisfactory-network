@@ -1,12 +1,6 @@
-config = {
-   -- inboxDir = "/inbox",
-   inboxDir = "/outbox",
-   logFile = "/log.txt",
-   outboxDir = "/outbox",
-}
-
 function init()
    -- print("initializing library")
+   filesystem.doFile("/config.lua")
    filesystem.doFile("/registry.lua")
    filesystem.doFile("/io.lua")
    filesystem.doFile("/debug.lua")
