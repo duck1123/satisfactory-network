@@ -54,7 +54,7 @@ function assertDirectory(path)
 end
 
 function addMessage(message)
-   local outboxDir = assertDirectory(config.outboxDir)
+   local outboxDir = config.outboxDir
    local path = findAvailableFile(outboxDir)
    writeData(path, message)
 end

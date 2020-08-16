@@ -9,5 +9,9 @@ function init()
    filesystem.doFile("/handlers.lua")
    filesystem.doFile("/events.lua")
    filesystem.doFile("/test.lua")
+
+   assertDirectory(config.outboxDir)
+   assertDirectory(config.inboxDir)
+
    -- print("done")
 end
