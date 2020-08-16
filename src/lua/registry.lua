@@ -42,6 +42,13 @@ registry = {
 
    },
 
+   commands = {
+      ["lights-on"] = "doLightsOn",
+      ["lights-out"] = "doLightsOut",
+      ["panic"] = "doPanic",
+      ["pong"] = "doPong",
+   },
+
    computers = {
       main = "D71ED6D54F6D9DC705D380BD19E4D34F",
       floor2 = "CCAB02D9441F2A2CCF42FAA698AF8C0A"

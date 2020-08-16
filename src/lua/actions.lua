@@ -82,3 +82,39 @@ function doStorageReport(verbose)
       debugInventories(c, verbose)
    end
 end
+
+actions = {
+   doLightsOut = function()
+      print("lights out")
+
+      for _, id in pairs(registry.lights) do
+         local light = component.proxy(id)
+         light:setMode(0)
+         print(light:getMode())
+         -- printMembers(light)
+
+      end
+
+   end,
+
+   doLightsOn = function()
+      print("lights on")
+
+      for _, id in pairs(registry.lights) do
+         local light = component.proxy(id)
+         light:setMode(1)
+         print(light:getMode())
+         -- printMembers(light)
+      end
+   end,
+
+   doPanic = function()
+      local c = component.proxy(registry.speakers[1])
+      c:playSound("alarm")
+
+   end,
+
+   doPong = function()
+      computer.beep()
+   end,
+}

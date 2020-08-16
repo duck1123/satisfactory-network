@@ -1,3 +1,23 @@
+function processMessage(path)
+   local data = readData(path)
+
+   print(
+      string.format(
+         "processing message: %s - %s",
+         path,
+         data
+      )
+   )
+
+   local handler = registry.commands[data]
+
+   if handler ~= null then
+      actions[handler](path, data)
+   end
+
+   return data
+end
+
 function handleButtonTrigger(eventName, button, arg1, def)
    -- print(
    --    string.format(
