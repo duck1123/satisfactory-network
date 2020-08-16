@@ -45,11 +45,14 @@
 
 (mount/defstate file-watcher
   :start
-  (wm/watch! (env :outbox) fh/handle-event)
+  (do
+    (println "starting watcher")
+    (wm/watch! (env :outbox2) #'fh/handle-event))
 
   :stop
   (when file-watcher
-    wm/close file-watcher))
+    (println "stopping watcher")
+    (wm/close file-watcher)))
 
 (defn stop-app []
   (doseq [component (:stopped (mount/stop))]
