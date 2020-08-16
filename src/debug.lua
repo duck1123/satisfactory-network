@@ -28,9 +28,26 @@ function getComponent(selector)
    return getComponents(selector)[1]
 end
 
-function debugTable(t)
-   for id, value in pairs(t) do
-      print("  " .. id .. ": " .. tostring(value))
+function debugTable(table, depth)
+   depth = depth or 0
+
+   for id, value in pairs(table) do
+      buf = ""
+
+      for i=0,depth do
+         buf = buf .. " "
+      end
+
+      buf = buf .. id
+      buf = buf .. ": "
+
+      if type(value) == "table" then
+         print(buf)
+         debugTable(value, depth + 2)
+      else
+         buf = buf .. tostring(value)
+         print(buf)
+      end
    end
 end
 
