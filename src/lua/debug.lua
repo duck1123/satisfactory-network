@@ -16,7 +16,7 @@ function debugTable(table, depth)
          buf = buf .. " "
       end
 
-      buf = buf .. id
+      buf = buf .. tostring(id)
       buf = buf .. ": "
 
       if type(value) == "table" then

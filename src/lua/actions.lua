@@ -22,33 +22,62 @@ function doIndicator(selector)
    end
 end
 
-function handleButtonTrigger(e, s, arg1)
+function handleButtonTrigger(eventName, button, arg1, buttonName)
    print("Handling button trigger: "
-            .. tostring(e)
+            .. tostring(eventName)
             .. ", "
-            .. tostring(s)
+            .. tostring(button)
+            .. ", "
+            .. buttonName
             .. ", "
             .. tostring(arg1))
+
+   -- printMembers(button)
    computer.beep()
    -- log("beep")
 end
 
 
 function doEventLoop(panel, indicator)
-   -- event.listen(panel)
-   local button = panel:getModule(5, 5)
-   -- button:setColor(0.3, 0.3, 0.3, 0.3)
-   event.listen(button)
-
-   printMembers(button)
    print("starting event loop")
+
+   local buttonDefs = {
+      {
+         x = 2,
+         y = 5,
+         name = "button1"
+      },
+      {
+         x = 5,
+         y = 5,
+         name = "button2"
+      }
+   }
+
+   local buttons = {}
+
+   for _, def in pairs(buttonDefs) do
+      local button = panel:getModule(def.x, def.y)
+
+      if button ~= null then
+         event.listen(button)
+         buttons[button] = def.name
+      else
+         print("no button")
+      end
+   end
+
+   debugTable(buttons)
 
    while true do
       computer.skip()
-      e, s, arg1 = event.pull(1)
+      eventName, button, arg1 = event.pull(1)
 
-      if e == "Trigger" then
-         handleButtonTrigger(e, s, arg1)
+      if eventName == "Trigger" then
+         print(button)
+         debugTable(buttons)
+         local buttonName = buttons[button] or "unknown"
+         handleButtonTrigger(eventName, button, arg1, buttonName)
       end
    end
 end

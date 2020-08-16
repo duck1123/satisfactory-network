@@ -38,6 +38,12 @@ registry = {
       "633DB38D4E44E11C7EC760B31AB98A2E",
    },
 
+   panels = {
+      main = {
+         id = "BBD7267948EDA66FAE13678C1BFD1421"
+      }
+   },
+
    poles = {
       copper = {
 
