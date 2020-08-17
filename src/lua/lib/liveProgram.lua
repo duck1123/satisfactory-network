@@ -23,11 +23,15 @@ function runProgramLive(path)
                loadingQueued = false
             end
 
+            sleep(2)
+
             loading = loadingQueued
 
             if loading then
+               print("Reset queue")
                loadingQueued = false
             end
+            -- print("done sleeping"  .. tostring(loading))
          end
    end)
 
