@@ -17,19 +17,29 @@ function runProgramLive(path)
 
                --    if status then
                --       programThread = programThread1
+               --    else
+               --       print("failed")
                --    end
                -- end
 
+               -- sleep(5)
+               print("done loading"  .. tostring(loading))
+               sleep(5)
+               print("done loading sleep done");
                loadingQueued = false
             end
-
-            sleep(2)
 
             loading = loadingQueued
 
             if loading then
                print("Reset queue")
+               -- sleep(5)
+               -- print("done sleeping")
                loadingQueued = false
+            else
+               print("reload loop sleep")
+               sleep(2)
+               print("reload loop sleep stop")
             end
             -- print("done sleeping"  .. tostring(loading))
          end
@@ -51,7 +61,10 @@ function runProgramLive(path)
                   if t == 2 then
                      if q then
                         if not loadingQueued then
+                           print("Reload event"  .. tostring(loading))
                            loadingQueued = true
+                        else
+                           print("already queued")
                         end
                      end
                   end
