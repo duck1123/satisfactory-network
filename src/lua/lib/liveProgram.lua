@@ -32,7 +32,7 @@ function runProgramLive(path)
 
    local listenerThread = thread.create(function()
          while true do
-            local e,s,t,p = event.pull()
+            local e,s,t,p = event.pull(0.1)
 
             if e ~= null then
                print(
@@ -52,6 +52,8 @@ function runProgramLive(path)
                   end
                end
             end
+
+            coroutine.yield()
          end
    end)
 end

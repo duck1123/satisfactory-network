@@ -22,12 +22,18 @@ end
 function event.pull(timeout)
    local co = coroutine.running()
    pulling[co] = {}
-   while not handlePull(co) do end
+
+   while not handlePull(co) do
+      coroutine.yield()
+   end
+
    local pullData = pulling[co]
    pulling[co] = nil
+
    if pullData.signal == nil then
       return
    end
+
    local data = pullData.signal
    pullData.signal = nil
    return table.unpack(data)
