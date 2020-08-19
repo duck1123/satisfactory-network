@@ -12,6 +12,10 @@ function handlePull(co)
       return false
    end
    for t,s in pairs(pulling) do
+      -- print(string.format("t = %s", t))
+      -- debugTable(pulling)
+      -- debugTable(s)
+      -- print(s.signal)
       if s.signal == nil then
          s.signal = signal
       end
@@ -20,17 +24,30 @@ function handlePull(co)
 end
 
 function event.pull(timeout)
+   print("event.pull")
    local co = coroutine.running()
    pulling[co] = {}
 
+   print("pre handle: " .. tostring(co))
+   debugTable(pulling)
+
    while not handlePull(co) do
+      -- print("yield")
       coroutine.yield()
    end
 
+   print("post handle")
+   debugTable(pulling)
+
    local pullData = pulling[co]
+
+   print("pull data: " .. tostring(co))
+   debugTable(pullData)
+
    pulling[co] = nil
 
    if pullData.signal == nil then
+      print("signal is null")
       return
    end
 
