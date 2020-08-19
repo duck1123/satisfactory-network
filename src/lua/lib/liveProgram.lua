@@ -7,6 +7,8 @@ function runProgramLive(path)
 
    local reloader = thread.create(function()
          while true do
+            -- print("checking for reload " .. tostring(loading))
+
             if loading then
                programThread:stop()
                reloadSystem()
@@ -23,9 +25,9 @@ function runProgramLive(path)
                -- end
 
                -- sleep(5)
-               print("done loading"  .. tostring(loading))
-               sleep(5)
-               print("done loading sleep done");
+               -- print("done loading"  .. tostring(loading))
+               -- sleep(5)
+               -- print("done loading sleep done");
                loadingQueued = false
             end
 
@@ -36,10 +38,10 @@ function runProgramLive(path)
                -- sleep(5)
                -- print("done sleeping")
                loadingQueued = false
-            else
-               print("reload loop sleep")
-               sleep(2)
-               print("reload loop sleep stop")
+            -- else
+            --    print("reload loop sleep")
+            --    -- sleep(2)
+            --    print("reload loop sleep stop")
             end
             -- print("done sleeping"  .. tostring(loading))
          end
