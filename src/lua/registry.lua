@@ -32,7 +32,7 @@ registry = {
       {
          action = "handleMessageButton",
          path = "panels.panel2[5,5]",
-         message = "button5"
+         message = "get-info"
       },
       {
          action = "handleMessageButton",
@@ -44,6 +44,7 @@ registry = {
 
    commands = {
       ["get-name"] = "doGetName",
+      ["get-info"] = "getInfo",
       ["lights-on"] = "doLightsOn",
       ["lights-out"] = "doLightsOut",
       ["panic"] = "doPanic",
@@ -87,6 +88,9 @@ registry = {
       },
       panel2 = {
          id = "148F6D4542B309BC461141A621350803"
+      },
+      panel3 = {
+         id = "9F7118DA4401A591BB1F21B29BFC39D1"
       }
    },
 
