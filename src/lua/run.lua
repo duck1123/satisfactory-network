@@ -11,6 +11,8 @@
 -- print("Running run2")
 
 -- filesystem.doFile("/lib/liveProgram.lua")
+lastLoad = 0
+
 filesystem.doFile("/init.lua")
 
 -- local doItLive = false
