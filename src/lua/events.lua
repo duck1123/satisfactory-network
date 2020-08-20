@@ -59,3 +59,8 @@ function handleButtonTrigger(eventName, button, arg1, def)
    -- log("beep")
    -- computer.beep()
 end
+
+function reloadSystem()
+   filesystem.doFile("/init.lua")
+   init()
+end

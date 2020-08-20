@@ -29,6 +29,12 @@ while true do
 
       doProcessInbox()
 
+      if eventName == "FileSystemUpdate" then
+         if arg1 == fsuSignals.change and arg3 == fsuTypes.file then
+            reloadSystem()
+         end
+      end
+
       if eventName == "Trigger" then
          local def = findButtonDef(registeredButtons, c)
          handleButtonTrigger(eventName, c, arg1, def)

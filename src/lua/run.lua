@@ -8,11 +8,14 @@
    so it always runs up to date code so you can directly see
    the changes you made in your code.
 ]]--
--- print("Running run2")
 
--- filesystem.doFile("/lib/liveProgram.lua")
-
-filesystem.doFile("/main.lua")
--- runProgramLive("/main.lua")
-
--- thread.run()
+if doItLive then
+   print("fsck it")
+   filesystem.doFile("/lib/event.lua")
+   filesystem.doFile("/lib/thread.lua")
+   filesystem.doFile("/lib/liveProgram.lua")
+   runProgramLive("/main.lua")
+   thread.run()
+else
+   filesystem.doFile("/main.lua")
+end

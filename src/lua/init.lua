@@ -1,19 +1,30 @@
+lastLoad = lastLoad or 0
+
 function init()
-   filesystem.doFile("/lib/string.split.lua")
+   local now = computer.millis()
+   local diff = now - lastLoad
 
-   filesystem.doFile("/config.lua")
-   filesystem.doFile("/registry.lua")
-   filesystem.doFile("/io.lua")
-   filesystem.doFile("/inspect.lua")
-   filesystem.doFile("/eventutils.lua")
-   filesystem.doFile("/actions.lua")
-   filesystem.doFile("/handlers.lua")
-   filesystem.doFile("/events.lua")
-   filesystem.doFile("/test.lua")
+   if lastLoad == 0 or diff > 1000 then
+      event.ignoreAll()
+      event.clear()
 
-   assertDirectory(config.outboxDir)
-   assertDirectory(config.inboxDir)
+      filesystem.doFile("/lib/string.split.lua")
+      filesystem.doFile("/config.lua")
+      filesystem.doFile("/registry.lua")
+      filesystem.doFile("/io.lua")
+      filesystem.doFile("/inspect.lua")
+      filesystem.doFile("/eventutils.lua")
+      filesystem.doFile("/actions.lua")
+      filesystem.doFile("/handlers.lua")
+      filesystem.doFile("/events.lua")
+      filesystem.doFile("/test.lua")
 
-   registeredButtons = registerButtons()
-   computer.beep()
+      assertDirectory(config.outboxDir)
+      assertDirectory(config.inboxDir)
+
+      registeredButtons = registerButtons()
+      computer.beep()
+   end
+
+   lastLoad = now
 end
