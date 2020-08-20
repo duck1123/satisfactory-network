@@ -18,10 +18,10 @@
 
 -- main()
 
-function main()
-   doEventLoop()
-   computer.beep()
-end
+-- function main()
+--    doEventLoop()
+--    computer.beep()
+-- end
 
 -- printMembers(panel)
 

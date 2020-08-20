@@ -10,7 +10,9 @@
 ]]--
 -- print("Running run2")
 
-filesystem.doFile("/lib/liveProgram.lua")
+-- filesystem.doFile("/lib/liveProgram.lua")
 
-runProgramLive("/main.lua")
-thread.run()
+filesystem.doFile("/main.lua")
+-- runProgramLive("/main.lua")
+
+-- thread.run()
