@@ -13,8 +13,6 @@ fsuTypes = {
    other = 2,
 }
 
-local registeredButtons = registerButtons()
-
 while true do
    computer.skip()
    eventName, c, arg1, arg2, arg3 = event.pull()

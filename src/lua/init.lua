@@ -16,4 +16,7 @@ function init()
 
    assertDirectory(config.outboxDir)
    assertDirectory(config.inboxDir)
+
+   registeredButtons = registerButtons()
+   computer.beep()
 end
