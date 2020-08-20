@@ -9,15 +9,16 @@ function runProgramLive(path)
          while true do
             if loading then
                programThread:stop()
-               local program = filesystem.loadFile(path)
+               reloadSystem()
+               -- local program = filesystem.loadFile(path)
 
-               if program then
-                  status, programThread1 = pcall(thread.create, program)
+               -- if program then
+               --    status, programThread1 = pcall(thread.create, program)
 
-                  if status then
-                     programThread = programThread1
-                  end
-               end
+               --    if status then
+               --       programThread = programThread1
+               --    end
+               -- end
 
                loadingQueued = false
             end

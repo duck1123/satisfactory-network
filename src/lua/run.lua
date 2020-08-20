@@ -8,6 +8,14 @@
    so it always runs up to date code so you can directly see
    the changes you made in your code.
 ]]--
+-- print("Running run2")
+
+-- filesystem.doFile("/lib/liveProgram.lua")
+filesystem.doFile("/init.lua")
+
+-- local doItLive = false
+
+init()
 
 if doItLive then
    print("fsck it")

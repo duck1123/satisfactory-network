@@ -1,30 +1,26 @@
 lastLoad = lastLoad or 0
 
 function init()
-   local now = computer.millis()
-   local diff = now - lastLoad
+   event.ignoreAll()
+   event.clear()
+   filesystem.doFile("/lib/string.split.lua")
+   -- filesystem.doFile("/lib/event.lua")
+   -- filesystem.doFile("/lib/thread.lua")
+   -- filesystem.doFile("/lib/liveProgram.lua")
 
-   if lastLoad == 0 or diff > 1000 then
-      event.ignoreAll()
-      event.clear()
+   filesystem.doFile("/config.lua")
+   filesystem.doFile("/registry.lua")
+   filesystem.doFile("/io.lua")
+   filesystem.doFile("/inspect.lua")
+   filesystem.doFile("/eventutils.lua")
+   filesystem.doFile("/actions.lua")
+   filesystem.doFile("/handlers.lua")
+   filesystem.doFile("/events.lua")
+   filesystem.doFile("/test.lua")
 
-      filesystem.doFile("/lib/string.split.lua")
-      filesystem.doFile("/config.lua")
-      filesystem.doFile("/registry.lua")
-      filesystem.doFile("/io.lua")
-      filesystem.doFile("/inspect.lua")
-      filesystem.doFile("/eventutils.lua")
-      filesystem.doFile("/actions.lua")
-      filesystem.doFile("/handlers.lua")
-      filesystem.doFile("/events.lua")
-      filesystem.doFile("/test.lua")
+   assertDirectory(config.outboxDir)
+   assertDirectory(config.inboxDir)
 
-      io.assertDirectory(config.outboxDir)
-      io.assertDirectory(config.inboxDir)
-
-      registeredButtons = registerButtons()
-      computer.beep()
-   end
-
-   lastLoad = now
+   registeredButtons = registerButtons()
+   computer.beep()
 end
