@@ -1,12 +1,8 @@
-print("running main7")
-
 local registeredButtons = registerButtons()
-
--- debugTable(buttons)
 
 while true do
    computer.skip()
-   eventName, c, arg1, arg2, arg3 = event.pull(1)
+   eventName, c, arg1, arg2, arg3 = event.pull()
 
    if eventName ~= null then
       print(
