@@ -1,5 +1,5 @@
 function init()
-   -- print("initializing library")
+   filesystem.doFile("/lib/string.split.lua")
    filesystem.doFile("/lib/event.lua")
    filesystem.doFile("/lib/thread.lua")
    filesystem.doFile("/lib/liveProgram.lua")
@@ -16,6 +16,4 @@ function init()
 
    assertDirectory(config.outboxDir)
    assertDirectory(config.inboxDir)
-
-   -- print("done")
 end
