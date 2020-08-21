@@ -10,19 +10,20 @@ registry = {
 
    buttons = {
       {
-         action = "handleButton1",
+         action = "handleMessageButton",
          path = "panels.main[2,5]",
-         message = "foo",
+         message = "lights-on",
 
       },
       {
-         action = "handleButton2",
+         action = "handleMessageButton",
          path = "panels.main[5,5]",
-         message = "bar",
+         message = "ping",
       },
       {
-         action = "handleButton3",
+         action = "handleMessageButton",
          path = "panels.main[8,5]",
+         message = "lights-out"
       },
       {
          action = "handleMessageButton",
