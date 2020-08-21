@@ -13,6 +13,8 @@ fsuTypes = {
    other = 2,
 }
 
+doProcessInbox()
+
 while true do
    computer.skip()
    eventName, c, arg1, arg2, arg3 = event.pull()
@@ -25,11 +27,7 @@ while true do
          )
       )
 
-      if eventName == "FileSystemUpdate" then
-         if arg1 == fsuSignals.add then
-            doProcessInbox()
-         end
-      end
+      doProcessInbox()
 
       if eventName == "Trigger" then
          local def = findButtonDef(registeredButtons, c)
