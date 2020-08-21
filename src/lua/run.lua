@@ -11,13 +11,13 @@
 -- print("Running run2")
 
 -- filesystem.doFile("/lib/liveProgram.lua")
-lastLoad = 0
+-- lastLoad = 0
 
-filesystem.doFile("/init.lua")
+-- filesystem.doFile("/init.lua")
 
 -- local doItLive = false
 
-init()
+-- init()
 
 if doItLive then
    print("fsck it")
