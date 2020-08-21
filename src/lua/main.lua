@@ -1,3 +1,18 @@
+fsuSignals = {
+   add = 0,
+   remove = 1,
+   change = 2,
+   rename = 3,
+   mount = 4,
+   unmount = 5,
+}
+
+fsuTypes = {
+   file = 0,
+   directory = 1,
+   other = 2,
+}
+
 local registeredButtons = registerButtons()
 
 while true do
@@ -13,7 +28,7 @@ while true do
       )
 
       if eventName == "FileSystemUpdate" then
-         if arg1 == 0 then
+         if arg1 == fsuSignals.add then
             doProcessInbox()
          end
       end
