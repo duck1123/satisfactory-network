@@ -2,6 +2,7 @@
 
 io = {
    addMessage = function(message)
+      -- print("Adding message: " .. message)
       local outboxDir = config.outboxDir
       local path = io.findAvailableFile(outboxDir)
       io.writeData(path, message)

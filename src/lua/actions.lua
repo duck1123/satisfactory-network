@@ -150,7 +150,19 @@ actions = {
    getComponents = function(path, data)
       local action, id = table.unpack(data)
       local cs = component.findComponent("")
-      io.addMessage(toEdn(cs));
+
+      local items = {}
+
+      for _, item in pairs(cs) do
+         table.insert(items, item)
+      end
+
+      local response = {
+         command = "get-components-response",
+         items = items
+      }
+
+      io.addMessage(toEdn(response));
    end,
 
    getInfo = function(path, data)

@@ -33,8 +33,10 @@ end
 function handleValue(value)
    if type(value) == "table" then
       if #value > 0 then
+         print("list")
          return toEdnList(value)
       else
+         print("object")
          return toEdn(value)
       end
    else

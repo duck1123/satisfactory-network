@@ -51,9 +51,18 @@ events = {
       local f = filesystem.loadFile(path)
 
       if f ~= null then
-         f()
+         print(type(f))
+
+         if type(f) == "string" then
+            print(f)
+         else
+            f()
+
+         end
 
          if response ~= null then
+            inspect.table(response)
+
             local command = response.command
 
             if command ~= null then

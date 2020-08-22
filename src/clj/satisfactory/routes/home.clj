@@ -20,7 +20,7 @@
         id "random-id"]
     (when (empty? @sq/component-ids)
       (swap! sq/pending-messages assoc id d)
-      (fh/send-message! "get-components" {:id id}))
+      (fh/send-message! "get-components" {"id" id}))
 
     {:body @sq/component-ids}))
 

@@ -65,13 +65,15 @@
      (alter sq/component-info assoc id info))))
 
 (defn handle-get-components-response
-  [_file lines]
-  (let [id "random-id"
-        ids (map #(nth (string/split % #":\s*") 1)
-                 (drop 1 lines))
-        d (get @sq/pending-messages id)]
-    (swap! sq/component-ids (constantly ids))
-    (when d (md/success! d ids))))
+  [_file data]
+  (puget/cprint data)
+  #_(println (pr-str data))
+  (let [ids (get data "items")]
+    (puget/cprint ids)
+    (let [id "random-id"
+          d (get @sq/pending-messages id)]
+      (swap! sq/component-ids (constantly (sort ids)))
+         (when d (md/success! d ids)))))
 
 (defn handle-get-info
   [_file data]
@@ -100,7 +102,8 @@
               (timbre/infof "%s - %s" (.getName file) command)
               (let [handler (get handlers command handle-fallback)]
                 (handler file message)))
-            (timbre/error "Could not determine command")))
+            (do (timbre/error "Could not determine command")
+                (puget/cprint message))))
         (.delete file)))))
 
 (defn handle-event
