@@ -33,10 +33,10 @@
     {:db (assoc db :docs docs)}))
 
 
-(kf/reg-controller
-  ::home-controller
-  {:params (constantly true)
-   :start  [::load-home-page]})
+;; (kf/reg-controller
+;;   ::home-controller
+;;   {:params (constantly true)
+;;    :start  [::load-home-page]})
 
 ;; -------------------------
 ;; Initialize app

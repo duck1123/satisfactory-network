@@ -121,7 +121,6 @@ actions = {
       local types = c:getTypes()
 
       local response = {
-         command = "get-component-response",
          id = id,
          nick = c.nick,
          types = types,
@@ -144,7 +143,7 @@ actions = {
          end
       end
 
-      io.addMessage(toEdn(response))
+      io.addCommand("get-component-response", response)
    end,
 
    getComponents = function(path, data)

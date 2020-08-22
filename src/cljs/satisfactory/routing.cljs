@@ -4,6 +4,7 @@
 
 (def routes
   [["/" :home]
+   ["/components/:id" :show-component]
    ["/about" :about]])
 
 (rf/reg-sub

@@ -1,6 +1,12 @@
 -- io.lua
 
 io = {
+   addCommand = function(command, args)
+      local response = args
+      response.command = command
+      io.addMessage(toEdn(response))
+   end,
+
    addMessage = function(message)
       -- print("Adding message: " .. message)
       local outboxDir = config.outboxDir

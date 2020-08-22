@@ -12,7 +12,7 @@
    [taoensso.timbre :as timbre]))
 
 (defn home-page [request]
-  (layout/render request "home.html"))
+  (layout/render "home.html"))
 
 (defn get-components
   [request]
@@ -41,8 +41,11 @@
    {:middleware [middleware/wrap-csrf
                  middleware/wrap-formats]}
    ["/" {:get home-page}]
-   ["/components" {:get get-components}]
-   ["/components/:id" {:get get-component}]
+   ["/components" {:get home-page}]
+   ["/components/:id" {:get home-page}]
+
+   ["/api/v1/components" {:get get-components}]
+   ["/api/v1/components/:id" {:get get-component}]
 
    ["/docs" {:get (fn [_]
                     (-> (response/ok (-> "docs/docs.md" io/resource slurp))

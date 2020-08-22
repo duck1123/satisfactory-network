@@ -2,6 +2,7 @@
   (:require
     [satisfactory.middleware :as middleware]
     [satisfactory.layout :refer [error-page]]
+    [satisfactory.routes :as routes]
     [satisfactory.routes.home :refer [home-routes]]
     [reitit.ring :as ring]
     [ring.middleware.content-type :refer [wrap-content-type]]
@@ -16,8 +17,8 @@
 (mount/defstate app-routes
   :start
   (ring/ring-handler
-    (ring/router
-      [(home-routes)])
+    (ring/router routes/routes
+                 )
     (ring/routes
       (ring/create-resource-handler
         {:path "/"})
