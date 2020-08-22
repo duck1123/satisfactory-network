@@ -72,7 +72,7 @@ function doStorageReport(verbose)
    for name, id in pairs(storage) do
       print(name .. ": ")
       local c = component.proxy(id)
-      debugInventories(c, verbose)
+      inspect.inventories(c, verbose)
    end
 end
 

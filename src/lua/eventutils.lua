@@ -30,7 +30,7 @@ function listButtons()
    for _, def in pairs(registry.buttons) do
       local path = def.path
       local pathInfo = parsePath(path)
-      debugTable(pathInfo)
+      inspect.table(pathInfo)
    end
 end
 
