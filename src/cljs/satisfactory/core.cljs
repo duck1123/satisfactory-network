@@ -32,6 +32,7 @@
   (fn [{:keys [db]} [_ docs]]
     {:db (assoc db :docs docs)}))
 
+(def sample-ids [])
 
 ;; (kf/reg-controller
 ;;   ::home-controller
@@ -47,7 +48,7 @@
     (kf/start! {:debug?         (boolean debug?)
                 :routes         routing/routes
                 :hash-routing?  true
-                :initial-db     {}
+                :initial-db     {:component-ids sample-ids}
                 :root-component [view/root-component]})))
 
 (defn init! [debug?]
