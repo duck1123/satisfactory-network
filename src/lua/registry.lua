@@ -44,6 +44,8 @@ registry = {
    },
 
    commands = {
+      ["get-component"] = "getComponent",
+      ["get-components"] = "getComponents",
       ["get-name"] = "doGetName",
       ["get-info"] = "getInfo",
       ["lights-on"] = "doLightsOn",

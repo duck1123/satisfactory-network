@@ -19,8 +19,8 @@ function init()
       filesystem.doFile("/events.lua")
       filesystem.doFile("/test.lua")
 
-      assertDirectory(config.outboxDir)
-      assertDirectory(config.inboxDir)
+      io.assertDirectory(config.outboxDir)
+      io.assertDirectory(config.inboxDir)
 
       registeredButtons = registerButtons()
       computer.beep()

@@ -183,27 +183,9 @@ inspect = {
       end
    end,
 
-   table = function(table, depth)
+   table = function(t, depth)
       depth = depth or 0
-
-      for id, value in pairs(table) do
-         buf = ""
-
-         for i=0,depth do
-            buf = buf .. " "
-         end
-
-         buf = buf .. tostring(id)
-         buf = buf .. ": "
-
-         if type(value) == "table" then
-            print(buf)
-            inspect.table(value, depth + 2)
-         else
-            buf = buf .. tostring(value)
-            print(buf)
-         end
-      end
+      print(getTableDebug(t, depth))
    end,
 
    types = function(c)

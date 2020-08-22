@@ -13,31 +13,31 @@ fsuTypes = {
    other = 2,
 }
 
-doProcessInbox()
+actions.doProcessInbox()
 
 while true do
    computer.skip()
    eventName, c, arg1, arg2, arg3 = event.pull()
 
    if eventName ~= null then
-      print(
-         string.format(
-            "mainloop eventName = %s, c = %s, arg1 = %s, arg2 = %s, arg3 = %s",
-            eventName, c, arg1, arg2, arg3
-         )
-      )
+      -- print(
+      --    string.format(
+      --       "mainloop eventName = %s, c = %s, arg1 = %s, arg2 = %s, arg3 = %s",
+      --       eventName, c, arg1, arg2, arg3
+      --    )
+      -- )
 
-      doProcessInbox()
+      actions.doProcessInbox()
 
       if eventName == "FileSystemUpdate" then
          if arg1 == fsuSignals.change and arg3 == fsuTypes.file then
-            reloadSystem()
+            events.reloadSystem()
          end
       end
 
       if eventName == "Trigger" then
          local def = findButtonDef(registeredButtons, c)
-         handleButtonTrigger(eventName, c, arg1, def)
+         events.handleButtonTrigger(eventName, c, arg1, def)
       end
    end
 end

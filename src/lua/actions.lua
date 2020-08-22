@@ -1,18 +1,18 @@
 actions = {
-   doDisableIron =   function ()
-      local ironPole1 = component.proxy(poles["iron"]["1"])
-      local ironPole2 = component.proxy(poles["iron"]["2"])
-      local ironPole3 = component.proxy(poles["iron"]["3"])
+   doDisableIron = function()
+      local ironPole1 = component.proxy(registry.poles.iron[1])
+      local ironPole2 = component.proxy(registry.poles.iron[2])
+      local ironPole3 = component.proxy(registry.poles.iron[3])
 
       ironPole1:setConnected(false)
       ironPole2:setConnected(false)
       ironPole3:setConnected(false)
    end,
 
-   doEnableIron = function ()
-      local ironPole1 = component.proxy(poles["iron"]["1"])
-      local ironPole2 = component.proxy(poles["iron"]["2"])
-      local ironPole3 = component.proxy(poles["iron"]["3"])
+   doEnableIron = function()
+      local ironPole1 = component.proxy(registry.poles.iron[1])
+      local ironPole2 = component.proxy(registry.poles.iron[2])
+      local ironPole3 = component.proxy(registry.poles.iron[3])
 
       ironPole1:setConnected(true)
       ironPole2:setConnected(true)
@@ -20,10 +20,10 @@ actions = {
    end,
 
    doFloodMessages = function()
-      addMessage(computer.time())
-      -- addMessage("a")
-      -- addMessage("b")
-      -- addMessage("c")
+      io.addMessage(computer.time())
+      -- io.addMessage("a")
+      -- io.addMessage("b")
+      -- io.addMessage("c")
    end,
 
    doGetName = function(path, data)
@@ -45,9 +45,9 @@ actions = {
    end,
 
    doIronPoles = function()
-      local ironPole1 = component.proxy(poles["iron"]["1"])
-      local ironPole2 = component.proxy(poles["iron"]["2"])
-      local ironPole3 = component.proxy(poles["iron"]["3"])
+      local ironPole1 = component.proxy(registry.poles.iron[1])
+      local ironPole2 = component.proxy(registry.poles.iron[2])
+      local ironPole3 = component.proxy(registry.poles.iron[3])
 
       print(ironPole1:isConnected())
       print(ironPole2:isConnected())
@@ -87,7 +87,7 @@ actions = {
    doPower = function(selector)
       local powerComponents = getComponents(selector)
       for _, pole in pairs(powerComponents) do
-         printMembers(pole)
+         inspect.members(pole)
          connected = pole:isConnected()
          pole:setConnected(true)
       end
@@ -99,7 +99,7 @@ actions = {
 
       for _, fileName in pairs(messages) do
          local fullPath = path .. "/" .. fileName
-         processMessage(fullPath)
+         events.processMessage(fullPath)
          filesystem.remove(fullPath)
       end
    end,
@@ -110,11 +110,52 @@ actions = {
       for name, id in pairs(storage) do
          print(name .. ": ")
          local c = component.proxy(id)
+
          inspect.inventories(c, verbose)
       end
    end,
 
+   getComponent = function(path, data)
+      local id = data.id
+      local c = component.proxy(id)
+      local types = c:getTypes()
+
+      local response = {
+         command = "get-component-response",
+         id = id,
+         nick = c.nick,
+         types = types,
+      }
+
+      for _, t in pairs(types) do
+         if t == "Factory" then
+            response.progress = c.progress
+            response.powerConsumProducing = c.powerConsumProducing
+            response.productivity = c.productivity
+            response.cycleTime = c.cycleTime
+            response.maxPotential = c.maxPotential
+            response.minPotential = c.minPotential
+            response.potential = c.potential
+            response.standby = c.standby
+         end
+
+         if t == "Manufacturer" then
+
+         end
+      end
+
+      io.addMessage(toEdn(response))
+   end,
+
+   getComponents = function(path, data)
+      local action, id = table.unpack(data)
+      local cs = component.findComponent("")
+      io.addMessage(toEdn(cs));
+   end,
+
    getInfo = function(path, data)
+      local action, id = table.unpack(data)
+      local info = {}
       print(
          string.format(
             "getting info. path = %s, data = %s",
@@ -122,5 +163,13 @@ actions = {
             data
          )
       )
+
+      local c = component.proxy(id)
+
+      info.nick = c.nick
+      info.types = c:getTypes()
+      info.location = table.pack(c:getLocation())
+
+      inspect.table(info)
    end,
 }

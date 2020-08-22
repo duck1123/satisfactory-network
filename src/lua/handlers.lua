@@ -9,18 +9,23 @@ handlers = {
       --       def
       --    )
       -- )
-      addMessage("lights-on")
+      io.addMessage("lights-on")
    end,
 
-   handleButton2 = function(eventName, button, arg1, def)
-      addMessage("ping")
+   handleButton2 = function (eventName, button, arg1, def)
+      io.addMessage("ping")
    end,
 
-   handleButton3 = function(eventName, button, arg1, def)
-      addMessage("lights-out")
+   handleButton3 = function (eventName, button, arg1, def)
+      io.addMessage("lights-out")
    end,
 
-   handleMessageButton = function(eventName, button, arg1, def)
-      addMessage(def.message)
+   handleMessageButton = function (eventName, button, arg1, def)
+      local response = {
+         command = def.message,
+         args = def.args,
+      }
+
+      io.addMessage(toEdn(response))
    end,
 }

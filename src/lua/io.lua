@@ -3,13 +3,13 @@
 io = {
    addMessage = function(message)
       local outboxDir = config.outboxDir
-      local path = findAvailableFile(outboxDir)
-      writeData(path, message)
+      local path = io.findAvailableFile(outboxDir)
+      io.writeData(path, message)
    end,
 
    appendData = function(filename, data)
-      local oldData = readData(filename)
-      writeData(filename, oldData .. data)
+      local oldData = io.readData(filename)
+      io.writeData(filename, oldData .. data)
    end,
 
    assertDirectory = function(path)
@@ -42,8 +42,13 @@ io = {
       return path
    end,
 
+
+   listFiles = function()
+      inspect.table(filesystem.childs("/"))
+   end,
+
    log = function(data)
-      appendData(config.logFile, computer.time() .. " - " .. data .. "\n")
+      io.appendData(config.logFile, computer.time() .. " - " .. data .. "\n")
    end,
 
    readData = function(filename)

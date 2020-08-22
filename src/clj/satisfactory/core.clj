@@ -8,8 +8,8 @@
     [clojure.tools.cli :refer [parse-opts]]
     [clojure.tools.logging :as log]
     [mount.core :as mount]
-    [watch.man :as wm]
-    )
+    [taoensso.timbre :as timbre]
+    [watch.man :as wm])
   (:gen-class))
 
 ;; log uncaught exceptions in threads
@@ -45,13 +45,13 @@
 
 (mount/defstate file-watcher
   :start
-  (do
-    (println "starting watcher")
-    (wm/watch! (env :outbox2) #'fh/handle-event))
+  (let [outbox (env :outbox)]
+    (timbre/infof "starting watcher: %s" outbox)
+    (wm/watch! outbox #'fh/handle-event))
 
   :stop
   (when file-watcher
-    (println "stopping watcher")
+    (timbre/info "stopping watcher")
     (wm/close file-watcher)))
 
 (defn stop-app []
