@@ -6,6 +6,74 @@ function getComponent(selector)
    return getComponents(selector)[1]
 end
 
+function getTableDebug(t, depth)
+   depth = depth or 0
+
+   buf = ""
+
+   for id, value in pairs(t) do
+      for i=0,depth do
+         buf = buf .. " "
+      end
+
+      buf = buf .. tostring(id)
+      buf = buf .. ": "
+
+      if type(value) == "table" then
+         buf = buf .. "\n"
+         buf = buf .. getTableDebug(value, depth + 2)
+      else
+         buf = buf .. tostring(value) .. "\n"
+      end
+   end
+
+   return buf
+end
+
+function handleValue(value)
+   if type(value) == "table" then
+      if #value > 0 then
+         return toEdnList(value)
+      else
+         return toEdn(value)
+      end
+   else
+      if type(value) == "number" then
+         return tostring(value)
+      else
+         if type(value) == "boolean" then
+            return tostring(value)
+         else
+            return "\"" .. tostring(value) .. "\""
+         end
+      end
+   end
+end
+
+function toEdnList(t)
+   buf = ""
+
+   for id, value in pairs(t) do
+      buf = buf .. " " .. handleValue(value)
+   end
+
+   return "[" .. buf .. " ]"
+end
+
+function toEdn(t, depth)
+   depth = depth or 0
+
+   buf = ""
+
+   for id, value in pairs(t) do
+      buf = buf .. " "
+      buf = buf .. "\"" .. tostring(id) .. "\""
+      buf = buf .. " " .. handleValue(value)
+   end
+
+   return "{" .. buf .. " }"
+end
+
 inspect = {
    component = function(c)
       inspect.members(c)
