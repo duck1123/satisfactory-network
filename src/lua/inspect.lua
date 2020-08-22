@@ -8,12 +8,12 @@ end
 
 inspect = {
    component = function(c)
-      printMembers(c)
+      inspect.members(c)
    end,
 
    components = function(components)
       for _, c in pairs(comonents) do
-         printMembers(c)
+         inspect.members(c)
       end
    end,
 
@@ -81,10 +81,7 @@ inspect = {
       print(
          "Printing members for "
             .. tostring(c)
-         -- .. " = "
-         -- .. c.nick
       )
-
       local members = c:getMembers()
       inspect.table(members)
    end,
