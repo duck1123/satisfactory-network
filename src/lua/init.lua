@@ -17,7 +17,6 @@ function init()
       filesystem.doFile("/actions.lua")
       filesystem.doFile("/handlers.lua")
       filesystem.doFile("/events.lua")
-      filesystem.doFile("/test.lua")
 
       io.assertDirectory(config.outboxDir)
       io.assertDirectory(config.inboxDir)
