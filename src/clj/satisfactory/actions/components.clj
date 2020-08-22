@@ -1,28 +1,32 @@
 (ns satisfactory.actions.components
   (:require
-   ;; [clojure.set :as set]
-   ;; [clojure.spec.alpha :as s]
-   ;; [expound.alpha :as expound]
-   ;; [dinsro.model.categories :as m.categories]
-   ;; [dinsro.spec.categories :as s.categories]
-   ;; [dinsro.spec.actions.categories :as s.a.categories]
-   ;; [dinsro.utils :as utils]
+   [clojure.java.io :as io]
+   [manifold.deferred :as md]
+   [puget.printer :as puget]
    [ring.util.http-response :as http]
-   [taoensso.timbre :as timbre]
-
-   )
-
-  )
+   [satisfactory.file-handler :as fh]
+   [satisfactory.queue :as sq]
+   [taoensso.timbre :as timbre]))
 
 
 (defn read-handler
-  [_]
-  #_{:body "ok"}
-  (http/ok {:status "ok"})
-  )
+  [request]
+  (let [request-id "get-component-request"
+        id (get-in request [:path-params :id])]
+    (if-let [current-info (get @sq/component-info id)]
+      (do
+        (fh/send-request! "get-component" request-id {"id" id})
+        (http/ok current-info))
+      (do
+        (fh/send-request! "get-component" request-id {"id" id})
+        (http/ok {:status "queued"})))))
 
 (defn index-handler
-  [_]
-  (http/ok {:status "ok"})
-  #_{:body "ok"}
-  )
+  [request]
+  (let [d (md/deferred)
+        id "random-id"]
+    (when (empty? @sq/component-ids)
+      (swap! sq/pending-messages assoc id d)
+      (fh/send-message! "get-components" {"id" id}))
+
+    (http/ok @sq/component-ids)))

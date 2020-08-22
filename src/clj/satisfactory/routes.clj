@@ -9,10 +9,13 @@
    ;; [dinsro.actions.admin-transactions :as a.admin-transactions]
    ;; [dinsro.actions.admin-users :as a.admin-users]
    ;; [dinsro.actions.authentication :as a.authentication]
- [satisfactory.actions.components :as a.components]
+
+[satisfactory.actions.components :as a.components]
    ;; [dinsro.actions.currencies :as a.currencies]
  [satisfactory.actions.home :as a.home]
  [satisfactory.middleware :as middleware]
+ ;; [satisfactory.queue :as sq]
+ [taoensso.timbre :as timbre]
    ;; [dinsro.actions.rate-sources :as a.rate-sources]
    ;; [dinsro.actions.rates :as a.rates]
    ;; [dinsro.actions.settings :as a.settings]
@@ -167,7 +170,7 @@
    (into [""] (map (fn [path] [path {:get a.home/home-handler}]) view-mappings))
    ;; ["/ws" a.websocket/ws-handler]
    ["/api/v1"
-    {:middleware [middleware/wrap-formats]}
+    {:middleware [middleware/wrap-csrf middleware/wrap-formats]}
     (into [""       #_{:middleware [middleware/wrap-restricted]}] model-routes)
     (into ["/admin" #_{:middleware [middleware/wrap-restricted]}] admin-routes)
 

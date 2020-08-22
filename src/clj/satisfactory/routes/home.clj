@@ -14,28 +14,6 @@
 (defn home-page [request]
   (layout/render "home.html"))
 
-(defn get-components
-  [request]
-  (let [d (md/deferred)
-        id "random-id"]
-    (when (empty? @sq/component-ids)
-      (swap! sq/pending-messages assoc id d)
-      (fh/send-message! "get-components" {"id" id}))
-
-    {:body @sq/component-ids}))
-
-(defn get-component
-  [request]
-  (let [request-id "get-component-request"
-        id (get-in request [:path-params :id])]
-    (if-let [current-info (get @sq/component-info id)]
-      (do
-        (fh/send-request! "get-component" request-id {"id" id})
-        {:body current-info})
-      (do
-        (fh/send-request! "get-component" request-id {"id" id})
-        {:body {:status "queued"}}))))
-
 (defn home-routes []
   [""
    {:middleware [middleware/wrap-csrf
