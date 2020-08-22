@@ -55,9 +55,6 @@ function handleButtonTrigger(eventName, button, arg1, def)
    else
       print("no def")
    end
-
-   -- log("beep")
-   -- computer.beep()
 end
 
 function reloadSystem()

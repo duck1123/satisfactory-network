@@ -30,24 +30,19 @@ function debugTable(table, depth)
 end
 
 function printMembers(c)
-   -- loc, loc2 = c:getLocation()
-
-   -- print(loc)
-   -- print(lo2)
-
    print(
       "Printing members for "
          .. tostring(c)
       -- .. " = "
       -- .. c.nick
    )
+
    local members = c:getMembers()
    debugTable(members)
 end
 
 function debugComponents(components)
    for _, c in pairs(comonents) do
-      -- print(c)
       printMembers(c)
    end
 end
@@ -59,13 +54,11 @@ end
 
 function debugConnectors(panel)
    local connectors = panel:getFactoryConnectors()
-   print("Printing connectors for: " .. tostring(connectors))
    debugTable(connectors)
 end
 
 function debugNetwork(c)
    local connectors = c:getNetworkConnectors()
-   print("Printing network connectors for: " .. tostring(connectors))
    debugTable(connectors)
 end
 
@@ -89,14 +82,11 @@ function debugInventory(inv)
          msg = msg .. "empty"
       end
 
-      -- log(msg)
       print(msg)
    end
 end
 
 function debugInventories(com, verbose)
-   -- print("debugging inventories for " .. tostring(com))
-
    if (verbose == null or verbose) then
       print(tostring(com) .. ": ")
    end
@@ -108,7 +98,6 @@ function debugInventories(com, verbose)
          print("inventory " .. i .. ": ")
       end
 
-      -- print(inv)
       debugInventory(inv)
    end
 end
@@ -121,7 +110,6 @@ function debugModules(component)
 
          if c ~= nuil then
             print("x: " .. x .. ", y=" .. y .. ", c=" .. tostring(c))
-            -- printMembers(c)
          end
       end
    end

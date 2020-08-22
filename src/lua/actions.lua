@@ -29,10 +29,7 @@ function doIndicator(selector)
    local components = getComponents(selector)
 
    for _, c in pairs(components) do
-      print("Component: " .. tostring(c))
-      printMembers(c)
       c:setColor(0.6, 0.8, 0, 2)
-      print("")
    end
 end
 
@@ -55,9 +52,6 @@ function doPower(selector)
       printMembers(pole)
       connected = pole:isConnected()
       pole:setConnected(true)
-      print(connected)
-      print("Connected: " .. tostring(pole:isConnected()))
-      -- print(component.proxy(c))
    end
 end
 
@@ -78,7 +72,6 @@ function doStorageReport(verbose)
    for name, id in pairs(storage) do
       print(name .. ": ")
       local c = component.proxy(id)
-
       debugInventories(c, verbose)
    end
 end
@@ -110,11 +103,7 @@ actions = {
       for _, id in pairs(registry.lights) do
          local light = component.proxy(id)
          light:setMode(0)
-         print(light:getMode())
-         -- printMembers(light)
-
       end
-
    end,
 
    doLightsOn = function()
@@ -123,15 +112,12 @@ actions = {
       for _, id in pairs(registry.lights) do
          local light = component.proxy(id)
          light:setMode(1)
-         print(light:getMode())
-         -- printMembers(light)
       end
    end,
 
    doPanic = function()
       local c = component.proxy(registry.speakers[1])
       c:playSound("alarm")
-
    end,
 
    doPong = function()

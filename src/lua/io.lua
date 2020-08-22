@@ -8,7 +8,6 @@ function readData(filename)
 end
 
 function writeData(filename, data)
-   -- print(string.format("Writing data: %s = %s", filename, data))
    local f = filesystem.open(filename, "w")
    f:write(data)
    f:close()

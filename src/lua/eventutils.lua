@@ -1,5 +1,4 @@
 function parsePath(path)
-   -- print("Parsing path: " .. tostring(path))
    local pathInfo = {}
    local searchTable = registry
    local segments = {}
@@ -34,7 +33,6 @@ function listButtons()
       debugTable(pathInfo)
    end
 end
-
 
 function registerButtons()
    local registeredButtons = {}
