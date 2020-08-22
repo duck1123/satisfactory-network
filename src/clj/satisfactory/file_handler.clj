@@ -24,7 +24,7 @@
 
 (defn process-messages!
   []
-  (let [outbox-dir (env :outbox2)
+  (let [outbox-dir (env :outbox)
         files (file-seq (io/file outbox-dir))]
     (doseq [file files]
       (when (.isFile file)
