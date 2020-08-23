@@ -33,22 +33,16 @@ end
 function handleValue(value)
    if type(value) == "table" then
       if #value > 0 then
-         print("list")
          return toEdnList(value)
       else
-         print("object")
          return toEdn(value)
       end
+   elseif type(value) == "number" then
+      return tostring(value)
+   elseif type(value) == "boolean" then
+      return tostring(value)
    else
-      if type(value) == "number" then
-         return tostring(value)
-      else
-         if type(value) == "boolean" then
-            return tostring(value)
-         else
-            return "\"" .. tostring(value) .. "\""
-         end
-      end
+      return "\"" .. tostring(value) .. "\""
    end
 end
 

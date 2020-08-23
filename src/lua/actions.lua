@@ -128,7 +128,7 @@ actions = {
       }
 
       for _, t in pairs(types) do
-         print(t)
+         -- print(t)
 
          if t == "Factory" then
             response.progress = c.progress
@@ -142,17 +142,20 @@ actions = {
          end
 
          if t == "Manufacturer" then
-            print("Getting recipe")
+            -- print("Getting recipe")
             local recipe = c:getRecipe();
 
             local recipeTable = {
                name = recipe:getName(),
                duration = recipe:getDuration(),
-               foo = "bar"
             }
 
-            inspect.table(recipeTable)
+            -- inspect.table(recipeTable)
             response.recipe = recipeTable
+         end
+
+         if t == "NetworkCard" then
+            print("Network Card")
          end
 
          if t == "TrainPlatform" then

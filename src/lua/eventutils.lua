@@ -66,6 +66,7 @@ function findButtonDef(registeredButtons, button)
    for path, candidateButton in pairs(registeredButtons) do
       if matchedPath == null and button == candidateButton then
          matchedPath = path
+         break
       end
    end
 
@@ -73,6 +74,7 @@ function findButtonDef(registeredButtons, button)
       for _, def in pairs(registry.buttons) do
          if matchedDef == null and def.path == matchedPath then
             matchedDef = def
+            break
          end
       end
    else
