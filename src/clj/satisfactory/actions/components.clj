@@ -22,7 +22,6 @@
   [_request]
   (let [d (md/deferred)
         id "random-id"]
-    (when (empty? @sq/component-ids)
-      (swap! sq/pending-messages assoc id d)
-      (fh/send-message! "get-components" {"id" id}))
+
+    (swap! sq/component-ids (constantly sq/sample-ids))
     (http/ok {:items @sq/component-ids})))
