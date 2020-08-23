@@ -67,7 +67,9 @@
    :server-logfile "log/figwheel-logfile.log"
    :nrepl-port 7002
    :css-dirs ["resources/public/css"]
-   :nrepl-middleware [cider.piggieback/wrap-cljs-repl]}
+   :nrepl-middleware [cider.piggieback/wrap-cljs-repl
+                      cider.nrepl/cider-middleware
+                      refactor-nrepl.middleware/wrap-refactor]}
 
 
   :profiles
