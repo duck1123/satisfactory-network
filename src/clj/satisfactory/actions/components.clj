@@ -1,13 +1,12 @@
 (ns satisfactory.actions.components
   (:require
-   [clojure.java.io :as io]
    [manifold.deferred :as md]
-   [puget.printer :as puget]
    [ring.util.http-response :as http]
    [satisfactory.file-handler :as fh]
    [satisfactory.queue :as sq]
    [taoensso.timbre :as timbre]))
 
+(def sample-ids [])
 
 (defn read-handler
   [request]
@@ -22,7 +21,7 @@
         (http/ok {:status "queued"})))))
 
 (defn index-handler
-  [request]
+  [_request]
   (let [d (md/deferred)
         id "random-id"]
     (when (empty? @sq/component-ids)
