@@ -12,7 +12,7 @@
 ;; (s/def ::item-map (s/map-of ::ds/id ::s.categories/item))
 
 (rfu/reg-basic-sub ::ids)
-(def item-map ::ids)
+(def ids ::ids)
 
 (rfu/reg-basic-sub ::item-map)
 (def item-map ::item-map)
@@ -24,7 +24,7 @@
 (defn items-sub
   "Subscription handler: Index all items"
   [item-map _]
-  (sort-by :db/id (vals item-map)))
+  (sort-by :id (vals item-map)))
 
 ;; (s/fdef items-sub
 ;;   :args (s/cat :item-map ::item-map
@@ -81,7 +81,7 @@
   {:db (-> db
            (assoc ::do-fetch-record-state :loaded)
            (assoc ::item item)
-           (assoc-in [::item-map (:db/id item)] item))})
+           (assoc-in [::item-map (:id item)] item))})
 
 (defn do-fetch-record-failed
   [{:keys [db]} _]

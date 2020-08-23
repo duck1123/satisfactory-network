@@ -3,6 +3,15 @@
    [clojure.java.io :as io]
    [manifold.deferred :as d]))
 
+(def sample-component-map
+  {"03EA52734F28F3640AB020939F56381E"
+   {"id" "03EA52734F28F3640AB020939F56381E"
+    "nick" "foo"}
+
+   "0556206E48BA9C739D598EB71008B2CB"
+   {"id" "0556206E48BA9C739D598EB71008B2CB"
+    "nick" "bar"}})
+
 (def sample-ids
   ["03EA52734F28F3640AB020939F56381E"
    "0556206E48BA9C739D598EB71008B2CB"

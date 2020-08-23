@@ -10,12 +10,9 @@
   [request]
   (let [request-id "get-component-request"
         id (get-in request [:path-params :id])]
-    (if-let [current-info (get @sq/component-info id)]
-      (do
-        (fh/send-request! "get-component" request-id {"id" id})
-        (http/ok current-info))
-      (do
-        (fh/send-request! "get-component" request-id {"id" id})
+    (let [item (get sq/sample-component-map id)]
+      (if item
+        (http/ok {:item item})
         (http/ok {:status "queued"})))))
 
 (defn index-handler
