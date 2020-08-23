@@ -57,6 +57,7 @@ function toEdnList(t)
 end
 
 function toEdn(t, depth)
+   computer.skip()
    depth = depth or 0
 
    buf = ""
