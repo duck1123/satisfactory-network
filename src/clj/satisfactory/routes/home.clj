@@ -5,6 +5,7 @@
    [puget.printer :as puget]
    [ring.util.response]
    [ring.util.http-response :as response]
+   [satisfactory.actions.components :as a.components]
    [satisfactory.file-handler :as fh]
    [satisfactory.layout :as layout]
    [satisfactory.middleware :as middleware]
@@ -22,8 +23,8 @@
    ["/components" {:get home-page}]
    ["/components/:id" {:get home-page}]
 
-   ["/api/v1/components" {:get get-components}]
-   ["/api/v1/components/:id" {:get get-component}]
+   ["/api/v1/components" {:get a.components/index-handler}]
+   ["/api/v1/components/:id" {:get a.components/read-handler}]
 
    ["/docs" {:get (fn [_]
                     (-> (response/ok (-> "docs/docs.md" io/resource slurp))
