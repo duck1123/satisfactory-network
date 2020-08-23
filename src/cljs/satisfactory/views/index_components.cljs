@@ -2,6 +2,7 @@
   (:require
    [kee-frame.core :as kf]
    [re-frame.core :as rf]
+   [satisfactory.components :as c]
    [satisfactory.events.components :as e.components]))
 
 (defn init-page
@@ -9,6 +10,13 @@
   {:db (assoc db ::e.components/items [])
    :document/title "Index Components"
    :dispatch-n [[::e.components/do-fetch-index]]})
+
+(kf/reg-event-fx ::init-page init-page)
+
+(kf/reg-controller
+ ::page-controller
+ {:params (c/filter-page :index-components-page)
+  :start [::init-page]})
 
 (defn page
   []

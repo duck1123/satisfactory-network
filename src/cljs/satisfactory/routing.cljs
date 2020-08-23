@@ -3,8 +3,8 @@
     [re-frame.core :as rf]))
 
 (def routes
-  [["/" :home]
-   ["/components/:id" :show-component]
+  [["/" :index-components-page]
+   ["/components/:id" :show-component-page]
    ["/about" :about]])
 
 (rf/reg-sub

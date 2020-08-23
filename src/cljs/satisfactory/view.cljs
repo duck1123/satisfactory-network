@@ -56,7 +56,7 @@
   [:div
    [navbar]
    [kf/switch-route (fn [route] (get-in route [:data :name]))
-    :home v.index-components/page
-    :show-component v.show-component/page
+    :index-components-page v.index-components/page
+    :show-component-page v.show-component/page
     :about about-page
     nil [:div ""]]])
