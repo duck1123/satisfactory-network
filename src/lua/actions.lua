@@ -139,6 +139,42 @@ actions = {
             response.minPotential = c.minPotential
             response.potential = c.potential
             response.standby = c.standby
+
+
+            local inventories = c:getInventories()
+
+            local inventoriesTable = {}
+            for _, inventory in pairs(inventories) do
+               local inventoryTable = {
+                  itemCount = inventory.itemCount,
+                  size = inventory.size
+               }
+
+               local stacksTable = {}
+
+               for x=0, inventory.size - 1 do
+                  local _, stack = inventory:getStack(x)
+                  local item = stack.item
+
+                  if item ~= nil then
+                     local itemType = item.type
+
+                     local stackTable = {
+                        type = itemType:getName(),
+                        count = stack.count,
+                     }
+
+                     table.insert(stacksTable, stackTable)
+                  end
+               end
+
+               inventoryTable.slots = stacksTable
+
+               table.insert(inventoriesTable, inventoryTable)
+               -- inventoryTable[tostring(a)] = tostring(b)
+            end
+
+            response.inventories = inventoriesTable
          end
 
          if t == "Manufacturer" then
