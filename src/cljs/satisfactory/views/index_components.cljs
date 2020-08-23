@@ -30,5 +30,5 @@
 
                (let [item @(rf/subscribe [::e.components/item id])]
 
-                 [:a {:href (str "/components/" id)} (if item (:nick item) id)])])
+                 [:a {:href (str "/components/" id)} (if item (or (:nick item) (:id item)) id)])])
             ids)]])])

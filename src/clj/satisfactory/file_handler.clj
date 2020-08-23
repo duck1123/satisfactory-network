@@ -99,6 +99,7 @@
     (doseq [file files]
       (when (.isFile file)
         (let [message (edn/read (PushbackReader. (io/reader file)))]
+          (timbre/infof "Message: %s" message)
           (if-let [command (get message "command")]
             (do
               (timbre/infof "%s - %s" (.getName file) command)
