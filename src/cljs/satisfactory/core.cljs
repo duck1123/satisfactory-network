@@ -1,5 +1,7 @@
 (ns satisfactory.core
   (:require
+   [com.smxemail.re-frame-cookie-fx]
+   [day8.re-frame.http-fx]
     [kee-frame.core :as kf]
     [re-frame.core :as rf]
     [ajax.core :as http]

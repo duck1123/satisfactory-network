@@ -4,6 +4,7 @@
    [kee-frame.core :as kf]
    [re-frame.core :as rf]
    [reframe-utils.core :as rfu]
+   [satisfactory.events :as e]
    [taoensso.timbre :as timbre]))
 
 ;; Item Map
@@ -91,9 +92,9 @@
   [{:keys [db]} [id]]
   {:db (assoc db ::do-fetch-record-state :loading)
    :http-xhrio
-   (e/fetch-request-auth
+   (e/fetch-request
     [:api-show-categories {:id id}]
-    (:token db)
+    #_(:token db)
     [::do-fetch-record-success]
     [::do-fetch-record-failed])})
 
@@ -146,9 +147,9 @@
 (defn do-fetch-index
   [{:keys [db]} _]
   {:http-xhrio
-   (e/fetch-request-auth
+   (e/fetch-request
     [:api-index-categories]
-    (:token db)
+    #_(:token db)
     [::do-fetch-index-success]
     [::do-fetch-index-failed])})
 
