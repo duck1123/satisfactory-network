@@ -118,94 +118,97 @@ actions = {
    getComponent = function(path, data)
       local id = data.id
       local c = component.proxy(id)
-      local types = c:getTypes()
 
-      local response = {
-         id = id,
-         nick = c.nick,
-         members = c:getMembers(),
-         types = types,
-      }
+      if c ~= null then
+         local types = c:getTypes()
 
-      for _, t in pairs(types) do
-         -- print(t)
+         local response = {
+            id = id,
+            nick = c.nick,
+            members = c:getMembers(),
+            types = types,
+         }
 
-         if t == "Factory" then
-            response.progress = c.progress
-            response.powerConsumProducing = c.powerConsumProducing
-            response.productivity = c.productivity
-            response.cycleTime = c.cycleTime
-            response.maxPotential = c.maxPotential
-            response.minPotential = c.minPotential
-            response.potential = c.potential
-            response.standby = c.standby
+         for _, t in pairs(types) do
+            -- print(t)
 
+            if t == "Factory" then
+               response.progress = c.progress
+               response.powerConsumProducing = c.powerConsumProducing
+               response.productivity = c.productivity
+               response.cycleTime = c.cycleTime
+               response.maxPotential = c.maxPotential
+               response.minPotential = c.minPotential
+               response.potential = c.potential
+               response.standby = c.standby
 
-            local inventories = c:getInventories()
+               local inventories = c:getInventories()
 
-            local inventoriesTable = {}
-            for _, inventory in pairs(inventories) do
-               local inventoryTable = {
-                  itemCount = inventory.itemCount,
-                  size = inventory.size
-               }
+               local inventoriesTable = {}
+               for _, inventory in pairs(inventories) do
+                  local inventoryTable = {
+                     itemCount = inventory.itemCount,
+                     size = inventory.size
+                  }
 
-               local stacksTable = {}
+                  local stacksTable = {}
 
-               for x=0, inventory.size - 1 do
-                  local _, stack = inventory:getStack(x)
-                  local item = stack.item
+                  for x=0, inventory.size - 1 do
+                     local _, stack = inventory:getStack(x)
+                     local item = stack.item
 
-                  if item ~= nil then
-                     local itemType = item.type
+                     if item ~= nil then
+                        local itemType = item.type
 
-                     local stackTable = {
-                        type = itemType:getName(),
-                        count = stack.count,
-                     }
+                        local stackTable = {
+                           type = itemType:getName(),
+                           count = stack.count,
+                        }
 
-                     table.insert(stacksTable, stackTable)
+                        table.insert(stacksTable, stackTable)
+                     end
                   end
+
+                  inventoryTable.slots = stacksTable
+
+                  table.insert(inventoriesTable, inventoryTable)
+                  -- inventoryTable[tostring(a)] = tostring(b)
                end
 
-               inventoryTable.slots = stacksTable
-
-               table.insert(inventoriesTable, inventoryTable)
-               -- inventoryTable[tostring(a)] = tostring(b)
+               response.inventories = inventoriesTable
             end
 
-            response.inventories = inventoriesTable
+            if t == "Manufacturer" then
+               -- print("Getting recipe")
+               local recipe = c:getRecipe();
+
+               local recipeTable = {
+                  name = recipe:getName(),
+                  duration = recipe:getDuration(),
+               }
+
+               -- inspect.table(recipeTable)
+               response.recipe = recipeTable
+            end
+
+            if t == "NetworkCard" then
+               print("Network Card")
+            end
+
+            if t == "TrainPlatform" then
+               response.isUnloading = c.isUnloading
+               response.isReversed = c.isReversed
+               response.isLoading = c.isLoading
+               response.fullLoad = c.fullLoad
+               response.fullUnload = c.fullUnload
+               response.trackPos = table.pack(c:getTrackPos())
+            end
          end
 
-         if t == "Manufacturer" then
-            -- print("Getting recipe")
-            local recipe = c:getRecipe();
-
-            local recipeTable = {
-               name = recipe:getName(),
-               duration = recipe:getDuration(),
-            }
-
-            -- inspect.table(recipeTable)
-            response.recipe = recipeTable
-         end
-
-         if t == "NetworkCard" then
-            print("Network Card")
-         end
-
-         if t == "TrainPlatform" then
-            response.isUnloading = c.isUnloading
-            response.isReversed = c.isReversed
-            response.isLoading = c.isLoading
-            response.fullLoad = c.fullLoad
-            response.fullUnload = c.fullUnload
-            response.trackPos = table.pack(c:getTrackPos())
-
-         end
+         io.addCommand("get-component-response", response)
+      else
+         print("c i null")
       end
-
-      io.addCommand("get-component-response", response)
    end,
 
    getComponents = function(path, data)
@@ -219,11 +222,10 @@ actions = {
       end
 
       local response = {
-         command = "get-components-response",
-         items = items
+         items = items,
       }
 
-      io.addMessage(toEdn(response));
+      io.addCommand("get-components-response", response);
    end,
 
    getInfo = function(path, data)
