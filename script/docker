@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+docker build -t duck1123/satisfactory-network .

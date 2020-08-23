@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# Reset environment and run tests
+
+set -ex
+
+lein uberjar
