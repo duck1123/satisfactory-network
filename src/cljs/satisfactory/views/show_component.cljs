@@ -29,19 +29,50 @@
  {:params (c/filter-param-page :show-component-page)
   :start  [::init-page]})
 
+(def excluded-members
+  #{
+    "getTypes"
+    "setRecipe"
+    "powerConsumProducing"
+    "potential"
+    "minPotential"
+    "maxPotential"
+    "standby"
+
+    "isLoading"
+    "isReversed"
+    "isUnloading"
+    "outputFlow"
+    "productivity"
+
+    "fullLoad"
+    "fullUnload"
+    "dockedOffset"
+    "cycleType"
+    "getLocation"
+
+
+    }
+  )
+
 (defn page
   [{{:keys [id]} :path-params}]
   (let [item @(rf/subscribe [::e.components/item id])
-        nick (:nick item)]
+        nick (:nick item)
+        exclude-members (fn [members]
+                          (filter
+                           (fn [m]
+                             (if (not (excluded-members m)) m))
+                           members))
+        new-item (update item :members exclude-members)]
     [:section.section>div.container>div.content
      [:p "Show Component: " id]
-
-     [:pre (with-out-str (p/pprint item))]
+     [:pre (with-out-str (p/pprint new-item))]
      [:p "Nick: " nick]
      [:ul (map
-           (fn [type] [:li {:key type}
-                     [:p type]
-                     ])
+           (fn [type]
+             [:li {:key type}
+              [:p type]])
            (:types item))]
      [:p "Standby: " (str (:standby item))]
      [:p "Potential: " (str (* (:potential item) 100) "%")]
