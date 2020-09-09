@@ -16,6 +16,7 @@
                  [expound "0.8.5"]
                  [funcool/struct "1.4.0"]
                  [kee-frame "0.3.3" :exclusions [metosin/reitit-core org.clojure/core.async]]
+                 [luminus-http-kit "0.1.6"]
                  [luminus-transit "0.1.2"]
                  [luminus-undertow "0.1.6"]
                  [luminus/ring-ttl-session "0.3.3"]
