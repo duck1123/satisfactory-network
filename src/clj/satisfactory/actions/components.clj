@@ -6,8 +6,6 @@
    [satisfactory.queue :as sq]
    [taoensso.timbre :as timbre]))
 
-(def sample-ids [])
-
 (defn read-handler
   [request]
   (let [request-id "get-component-request"
