@@ -2,10 +2,16 @@
   (:require
     [re-frame.core :as rf]))
 
+(def api-routes
+  [["/components"
+    ["" :api-index-components]
+    ["/:id" :api-show-component]]])
+
 (def routes
   [["/" :index-components-page]
    ["/components/:id" :show-component-page]
-   ["/about" :about]])
+   ["/about" :about]
+   (into ["/api/v1"] api-routes)])
 
 (rf/reg-sub
   :nav/route
@@ -16,7 +22,6 @@
   :nav/route-name
   (fn [_ [_ route-name]]
     {:navigate-to [route-name]}))
-
 
 (rf/reg-sub
   :nav/page

@@ -10,6 +10,10 @@
 ;; Item Map
 
 ;; (s/def ::item-map (s/map-of ::ds/id ::s.categories/item))
+
+(rfu/reg-basic-sub ::ids)
+(def item-map ::ids)
+
 (rfu/reg-basic-sub ::item-map)
 (def item-map ::item-map)
 
@@ -93,7 +97,7 @@
   {:db (assoc db ::do-fetch-record-state :loading)
    :http-xhrio
    (e/fetch-request
-    [:api-show-categories {:id id}]
+    [:api-show-component {:id id}]
     #_(:token db)
     [::do-fetch-record-success]
     [::do-fetch-record-failed])})
@@ -132,7 +136,8 @@
 (defn do-fetch-index-success
   [{:keys [db]} [{:keys [items]}]]
   {:db (-> db
-           (update ::item-map merge (into {} (map #(vector (:db/id %) %) items)))
+           #_(update ::item-map merge (into {} (map #(vector (:db/id %) %) items)))
+           (assoc ::ids items)
            (assoc ::do-fetch-index-state :loaded))})
 
 (defn do-fetch-index-failed
@@ -148,7 +153,7 @@
   [{:keys [db]} _]
   {:http-xhrio
    (e/fetch-request
-    [:api-index-categories]
+    [:api-index-components]
     #_(:token db)
     [::do-fetch-index-success]
     [::do-fetch-index-failed])})

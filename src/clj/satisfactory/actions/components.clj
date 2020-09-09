@@ -25,5 +25,4 @@
     (when (empty? @sq/component-ids)
       (swap! sq/pending-messages assoc id d)
       (fh/send-message! "get-components" {"id" id}))
-
-    (http/ok @sq/component-ids)))
+    (http/ok {:items @sq/component-ids})))

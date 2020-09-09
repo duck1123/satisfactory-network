@@ -21,7 +21,7 @@
 (defn page
   []
   [:section.section>div.container>div.content
-   (let [ids @(rf/subscribe [:component-ids])]
+   (let [ids @(rf/subscribe [::e.components/ids])]
      [:div
       [:ul (map
             (fn [id]
