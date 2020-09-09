@@ -35,7 +35,7 @@
          outfile (io/file inbox (str id ".txt"))
          record (format-table (assoc (dissoc options :request-id) "command" command))
          message (str "response = " record)]
-     (timbre/info message)
+     ;; (timbre/info message)
      (spit outfile message))))
 
 (defn send-request!
@@ -61,6 +61,8 @@
   [_file data]
   (let [id (get data "id")
         info (dissoc data "command")]
+    (timbre/info id)
+    (puget/cprint info)
     (dosync
      (alter sq/component-info assoc id info))))
 
