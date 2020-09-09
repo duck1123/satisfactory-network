@@ -37,4 +37,9 @@
         (swap! sq/pending-messages assoc id d)
         (fh/send-message! "get-components" {"id" id})))
 
-    (http/ok {:items @sq/component-ids})))
+    (http/ok {:items (map
+                      (fn [id]
+                        (let [item (get sq/component-info id { "id" id })]
+                          item)
+                        )
+                      @sq/component-ids)})))
