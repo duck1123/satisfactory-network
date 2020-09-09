@@ -4,13 +4,28 @@
    [manifold.deferred :as d]))
 
 (def sample-component-map
-  {"03EA52734F28F3640AB020939F56381E"
-   {"id" "03EA52734F28F3640AB020939F56381E"
-    "nick" "foo"}
+  {
+   "03EA52734F28F3640AB020939F56381E"
+   {"nick" "Floor Power 4",
+    "types" ["PowerSwitch",
+             "Actor",
+             "Object"],
+    "id" "03EA52734F28F3640AB020939F56381E"}
 
    "0556206E48BA9C739D598EB71008B2CB"
-   {"id" "0556206E48BA9C739D598EB71008B2CB"
-    "nick" "bar"}})
+   {"progress" 0.0051281452178955,
+    "powerConsumProducing" 12,
+    "id" "0556206E48BA9C739D598EB71008B2CB",
+    "standby"false,
+    "types" ["Factory",
+             "Actor",
+             "Object"],
+    "productivity" 0.78431379795074,
+    "nick" "Iron Miner 2-1",
+    "minPotential" 0.0099999997764826,
+    "maxPotential" 2.5,
+    "cycleTime" 1,
+    "potential" 1}})
 
 (def sample-ids
   ["03EA52734F28F3640AB020939F56381E"
