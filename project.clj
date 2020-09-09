@@ -39,6 +39,9 @@
                  [org.webjars/webjars-locator "0.40"]
                  [org.webjars/webjars-locator-jboss-vfs "0.1.0"]
                  [re-frame "1.0.0"]
+                 [reframe-utils "0.2.2"
+                  :exclusions [args4j
+                               com.cognitect/transit-cljs]]
                  [reagent "0.10.0"]
                  [ring-webjars "0.2.0"]
                  [ring/ring-core "1.8.1"]

@@ -1,7 +1,14 @@
 (ns satisfactory.views.index-components
   (:require
    [kee-frame.core :as kf]
-   [re-frame.core :as rf]))
+   [re-frame.core :as rf]
+   [satisfactory.events.components :as e.components]))
+
+(defn init-page
+  [{:keys [db]} _]
+  {:db (assoc db ::e.components/items [])
+   :document/title "Index Components"
+   :dispatch-n [[::e.components/do-fetch-index]]})
 
 (defn page
   []
