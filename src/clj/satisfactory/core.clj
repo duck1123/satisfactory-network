@@ -47,7 +47,9 @@
   :start
   (let [outbox (env :outbox)]
     (timbre/infof "starting watcher: %s" outbox)
-    (wm/watch! outbox #'fh/handle-event))
+    (try (wm/watch! outbox #'fh/handle-event)
+         (catch Exception ex
+           (timbre/error "Can't start watcher: " ex))))
 
   :stop
   (when file-watcher
