@@ -61,17 +61,17 @@
   [_file data]
   (let [id (get data "id")
         info (dissoc data "command")]
-    (timbre/info id)
-    (puget/cprint info)
+    ;; (timbre/info id)
+    ;; (puget/cprint info)
     (dosync
      (alter sq/component-info assoc id info))))
 
 (defn handle-get-components-response
   [_file data]
-  (puget/cprint data)
+  ;; (puget/cprint data)
   #_(println (pr-str data))
   (let [ids (get data "items")]
-    (puget/cprint ids)
+    ;; (puget/cprint ids)
     (let [id "random-id"
           d (get @sq/pending-messages id)]
       (swap! sq/component-ids (constantly (sort ids)))
