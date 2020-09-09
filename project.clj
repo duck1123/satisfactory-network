@@ -10,7 +10,7 @@
                  [com.cognitect/transit-clj "1.0.324"]
                  [com.fasterxml.jackson.core/jackson-core "2.11.2"]
                  [com.fasterxml.jackson.core/jackson-databind "2.11.2"]
-                 ;; [com.smxemail/re-frame-cookie-fx "0.0.2"]
+                 [com.smxemail/re-frame-cookie-fx "0.0.2"]
                  [com.smxemail/re-frame-document-fx "0.0.1-SNAPSHOT"]
                  [com.taoensso/timbre "4.10.0"]
                  [cprop "0.1.17"]
