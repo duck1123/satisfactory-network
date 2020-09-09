@@ -1,5 +1,6 @@
 (ns satisfactory.views.index-components
   (:require
+   [cljs.pprint :as p]
    [kee-frame.core :as kf]
    [re-frame.core :as rf]
    [satisfactory.components :as c]
@@ -25,5 +26,9 @@
      [:div
       [:ul (map
             (fn [id]
-              [:li {:key id} [:a {:href (str "/components/" id)} id]])
+              [:li {:key id}
+
+               (let [item @(rf/subscribe [::e.components/item id])]
+
+                 [:a {:href (str "/components/" id)} (if item (:nick item) id)])])
             ids)]])])
