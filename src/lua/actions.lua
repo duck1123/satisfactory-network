@@ -123,10 +123,13 @@ actions = {
       local response = {
          id = id,
          nick = c.nick,
+         members = c:getMembers(),
          types = types,
       }
 
       for _, t in pairs(types) do
+         print(t)
+
          if t == "Factory" then
             response.progress = c.progress
             response.powerConsumProducing = c.powerConsumProducing
@@ -139,6 +142,26 @@ actions = {
          end
 
          if t == "Manufacturer" then
+            print("Getting recipe")
+            local recipe = c:getRecipe();
+
+            local recipeTable = {
+               name = recipe:getName(),
+               duration = recipe:getDuration(),
+               foo = "bar"
+            }
+
+            inspect.table(recipeTable)
+            response.recipe = recipeTable
+         end
+
+         if t == "TrainPlatform" then
+            response.isUnloading = c.isUnloading
+            response.isReversed = c.isReversed
+            response.isLoading = c.isLoading
+            response.fullLoad = c.fullLoad
+            response.fullUnload = c.fullUnload
+            response.trackPos = table.pack(c:getTrackPos())
 
          end
       end
