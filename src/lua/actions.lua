@@ -102,6 +102,7 @@ actions = {
          local fullPath = path .. "/" .. fileName
          events.processMessage(fullPath)
          filesystem.remove(fullPath)
+         computer.skip()
       end
    end,
 
@@ -156,17 +157,20 @@ actions = {
 
                   for x=0, inventory.size - 1 do
                      local _, stack = inventory:getStack(x)
-                     local item = stack.item
 
-                     if item ~= nil then
-                        local itemType = item.type
+                     if stack ~= nil then
+                        local item = stack.item
 
-                        local stackTable = {
-                           type = itemType:getName(),
-                           count = stack.count,
-                        }
+                        if item ~= nil then
+                           local itemType = item.type
 
-                        table.insert(stacksTable, stackTable)
+                           local stackTable = {
+                              type = itemType:getName(),
+                              count = stack.count,
+                           }
+
+                           table.insert(stacksTable, stackTable)
+                        end
                      end
                   end
 

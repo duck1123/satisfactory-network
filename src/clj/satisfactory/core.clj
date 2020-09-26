@@ -34,10 +34,15 @@
   :stop
   (http/stop http-server))
 
+(defn nrepl-handler []
+  (require 'cider.nrepl)
+  (ns-resolve 'cider.nrepl 'cider-nrepl-handler))
+
 (mount/defstate ^{:on-reload :noop} repl-server
   :start
   (when (env :nrepl-port)
     (nrepl/start {:bind (env :nrepl-bind)
+                  :handler (nrepl-handler)
                   :port (env :nrepl-port)}))
   :stop
   (when repl-server

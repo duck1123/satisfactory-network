@@ -62,6 +62,8 @@ events = {
 
          if response ~= nil then
             inspect.table(response)
+            computer.skip()
+
 
             local command = response.command
 

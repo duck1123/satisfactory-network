@@ -31,7 +31,7 @@
                  [mount "0.1.16"]
                  [mvxcvi/puget "1.2.1"]
                  [mvxcvi/whidbey "2.2.0"]
-                 [nrepl "0.8.0"]
+                 [nrepl "0.8.2"]
                  [org.clojure/clojure "1.10.1"]
                  [org.clojure/clojurescript "1.10.773" :scope "provided"]
                  [org.clojure/tools.cli "1.0.194"]
@@ -59,7 +59,9 @@
   :target-path "target/%s/"
   :main ^:skip-aot satisfactory.core
 
-  :plugins [[lein-cljsbuild "1.1.7"]]
+  :plugins [[lein-ancient "0.6.15"]
+            [lein-cljsbuild "1.1.7"]
+            [cider/cider-nrepl "0.25.0-SNAPSHOT"]]
   :clean-targets ^{:protect false}
   [:target-path [:cljsbuild :builds :app :compiler :output-dir] [:cljsbuild :builds :app :compiler :output-to]]
   :figwheel
@@ -99,7 +101,7 @@
 
    :project/dev  {:jvm-opts ["-Dconf=dev-config.edn" ]
                   :dependencies [[binaryage/devtools "1.0.2"]
-                                 [cider/piggieback "0.5.0"]
+                                 [cider/piggieback "0.5.1"]
                                  [doo "0.1.11"]
                                  [figwheel-sidecar "0.5.20"]
                                  [pjstadig/humane-test-output "0.10.0"]
@@ -131,7 +133,8 @@
                   :source-paths ["env/dev/clj" ]
                   :resource-paths ["env/dev/resources"]
                   :repl-options {:init-ns user
-                                 :timeout 120000}
+                                 :timeout 120000
+                                 :nrepl-middleware [cider.piggieback/wrap-cljs-repl]}
                   :injections [(require 'pjstadig.humane-test-output)
                                (pjstadig.humane-test-output/activate!)]}
    :project/test {:jvm-opts ["-Dconf=test-config.edn" ]
