@@ -30,7 +30,7 @@
    (send-message! command {}))
   ([command options]
    (let [inbox (io/file (env :inbox))
-         request-id (:request-id options)
+         _request-id (:request-id options)
          id (inst-ms (java.util.Date.))
          outfile (io/file inbox (str id ".txt"))
          record (format-table (assoc (dissoc options :request-id) "command" command))
@@ -61,28 +61,23 @@
   [_file data]
   (let [id (get data "id")
         info (dissoc data "command")]
-    ;; (timbre/info id)
-    ;; (puget/cprint info)
     (dosync
      (alter sq/component-info assoc id info))))
 
 (defn handle-get-components-response
   [_file data]
-  ;; (puget/cprint data)
-  #_(println (pr-str data))
-  (let [ids (get data "items")]
-    ;; (puget/cprint ids)
-    (let [id "random-id"
-          d (get @sq/pending-messages id)]
-      (swap! sq/component-ids (constantly (sort ids)))
-      (when d (md/success! d ids)))))
+  (let [ids (get data "items")
+        id "random-id"
+        d (get @sq/pending-messages id)]
+    (swap! sq/component-ids (constantly (sort ids)))
+    (when d (md/success! d ids))))
 
 (defn handle-get-info
-  [_file data]
+  [_file _data]
   (timbre/info "get-info"))
 
 (defn handle-panic
-  [file data]
+  [_file _data]
   (send-message! "panic"))
 
 (def handlers
@@ -118,3 +113,14 @@
         (process-messages!)))
     (catch Exception e
       (timbre/error e))))
+
+(defn list-files
+  []
+  (let [c (env :computer)
+        f (io/file c)]
+    (file-seq f)))
+
+(defn list-local-files
+  []
+  (let [f (io/file "/home/duck/projects/satisfactory-network")]
+    (file-seq f)))
