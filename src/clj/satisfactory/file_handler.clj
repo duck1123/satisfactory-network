@@ -8,10 +8,9 @@
    [satisfactory.config :refer [env]]
    [satisfactory.queue :as sq]
    [taoensso.timbre :as timbre])
-  (:import (java.io PushbackReader)
-           (java.io File)
-           (org.apache.commons.io FileUtils)
-           ))
+  (:import
+   (java.io PushbackReader)
+   (org.apache.commons.io FileUtils)))
 
 (defn format-table
   [data]
@@ -98,19 +97,20 @@
       (when (.isFile file)
         (let [message (edn/read (PushbackReader. (io/reader file)))]
           (timbre/infof "Message: %s" message)
-          (if-let [command (get message "command")]
+          (if-let [command (timbre/spy :info (get message "command"))]
             (do
               (timbre/infof "%s - %s" (.getName file) command)
               (let [handler (get handlers command handle-fallback)]
                 (handler file message)))
             (do (timbre/error "Could not determine command")
                 (puget/cprint message))))
-        (.delete file)))))
+        (.delete file)
+        (Thread/sleep 500)))))
 
 (defn handle-event
   [event]
   (try
-    (let [{:keys [types]} event]
+    (let [{:keys [types]} (timbre/spy :info event)]
       (when (some (partial = :create) types)
         (Thread/sleep 1000)
         (process-messages!)))
@@ -134,19 +134,23 @@
         src (io/file src-path)
         dest (io/file (env :computer))]
     (doseq [f (list-local-files)]
-      (Thread/sleep 500)
+      ;; (Thread/sleep 500)
       (when (not= (.getPath f) src-path)
         (let [name (.getName f)
               dest-name (io/file dest name)]
           (if (.isDirectory f)
-            (.mkdirs dest-name)
+            (do
+              (.mkdirs dest-name)
+              (Thread/sleep 500))
             (if (.exists f)
               (when (not (FileUtils/contentEquals
                         f dest-name))
                 (timbre/infof "Updating file: %s" name)
-                (io/copy f dest-name))
+                (io/copy f dest-name)
+                (Thread/sleep 500))
               (do
                 (timbre/infof "Creating file: %s" name)
-                (io/copy f dest-name)))))))
+                (io/copy f dest-name)
+                (Thread/sleep 500)))))))
 
     #_(io/copy src dest)))

@@ -9,22 +9,22 @@ registry = {
    },
 
    buttons = {
-      -- {
-      --    action = "handleMessageButton",
-      --    path = "panels.main[2,5]",
-      --    message = "lights-on",
+      {
+         action = "handleMessageButton",
+         path = "panels.main[3,5]",
+         message = "lights-on",
 
-      -- },
-      -- {
-      --    action = "handleMessageButton",
-      --    path = "panels.main[5,5]",
-      --    message = "ping",
-      -- },
-      -- {
-      --    action = "handleMessageButton",
-      --    path = "panels.main[8,5]",
-      --    message = "lights-out"
-      -- },
+      },
+      {
+         action = "handleMessageButton",
+         path = "panels.main[5,5]",
+         message = "ping",
+      },
+      {
+         action = "handleMessageButton",
+         path = "panels.main[7,5]",
+         message = "panic"
+      },
       -- {
       --    action = "handleMessageButton",
       --    path = "panels.panel2[1,5]",
@@ -87,7 +87,7 @@ registry = {
 
    panels = {
       main = {
-         id = "BBD7267948EDA66FAE13678C1BFD1421"
+         id = "0A7867FD4EF25791606E04AD4C45FD26"
       },
       panel2 = {
          id = "148F6D4542B309BC461141A621350803"
@@ -135,7 +135,7 @@ registry = {
    },
 
    speakers = {
-      "12164ED44F7E14A548935CBB0FA7FF6D"
+      "796ED64C48DEF32E61971B97DECC4349"
    },
 
    stations = {

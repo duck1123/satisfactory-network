@@ -23,7 +23,7 @@ while true do
    computer.skip()
    eventName, c, arg1, arg2, arg3 = event.pull()
 
-   print(eventName)
+   -- print(eventName)
 
    if eventName ~= nil then
       print(

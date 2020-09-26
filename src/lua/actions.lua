@@ -76,6 +76,7 @@ actions = {
    end,
 
    doPanic = function()
+      print("Panic!")
       local c = component.proxy(registry.speakers[1])
       c:playSound("alarm")
    end,
@@ -233,18 +234,21 @@ actions = {
       local info = {}
       print(
          string.format(
-            "getting info. path = %s, data = %s",
+            "getting info. path = %s, data = %s, id = %s",
             path,
-            data
+            data,
+            id
          )
       )
 
-      local c = component.proxy(id)
+      if id ~= nil then
+         local c = component.proxy(id)
 
-      info.nick = c.nick
-      info.types = c:getTypes()
-      info.location = table.pack(c:getLocation())
+         info.nick = c.nick
+         info.types = c:getTypes()
+         info.location = table.pack(c:getLocation())
 
-      inspect.table(info)
+         inspect.table(info)
+      end
    end,
 }
