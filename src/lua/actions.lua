@@ -81,6 +81,12 @@ actions = {
       c:playSound("alarm")
    end,
 
+   rickRoll = function()
+      print("Rick Roll!")
+      local c = component.proxy(registry.speakers[1])
+      c:playSound("rick")
+   end,
+
    doPong = function()
       computer.beep()
    end,
@@ -119,7 +125,30 @@ actions = {
 
    getComponent = function(path, data)
       local id = data.id
+
+      print(
+         string.format(
+            "getting component. id = %s",
+            id
+         )
+      )
+
+      local response = actions.getComponentInfo(id)
+
+      if response ~= nil then
+         io.addCommand("get-component-response", response)
+      end
+   end,
+
+   getComponentInfo = function(id)
       local c = component.proxy(id)
+
+      print(
+         string.format(
+            "getting component. id = %s",
+            id
+         )
+      )
 
       if c ~= nil then
          local types = c:getTypes()
@@ -210,10 +239,11 @@ actions = {
             end
          end
 
-         io.addCommand("get-component-response", response)
+         return response
       else
-         print("c i nil")
+         return nil
       end
+
    end,
 
    getComponents = function(path, data)

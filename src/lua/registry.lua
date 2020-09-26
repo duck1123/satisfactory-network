@@ -12,7 +12,7 @@ registry = {
       {
          action = "handleMessageButton",
          path = "panels.main[3,5]",
-         message = "lights-on",
+         message = "rick",
 
       },
       {
@@ -52,6 +52,7 @@ registry = {
       ["lights-out"] = "doLightsOut",
       ["panic"] = "doPanic",
       ["pong"] = "doPong",
+      ["rick"] = "rickRoll",
    },
 
    computers = {

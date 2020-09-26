@@ -82,8 +82,13 @@
   [_file _data]
   (send-message! "panic"))
 
+(defn handle-rick
+  [_file _data]
+  (send-message! "rick"))
+
 (def handlers
   {"panic" handle-panic
+   "rick" handle-rick
    "ping" handle-ping
    "get-component-response" handle-get-component-response
    "get-components-response" handle-get-components-response
