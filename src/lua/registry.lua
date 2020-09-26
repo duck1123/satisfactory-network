@@ -9,37 +9,37 @@ registry = {
    },
 
    buttons = {
-      {
-         action = "handleMessageButton",
-         path = "panels.main[2,5]",
-         message = "lights-on",
+      -- {
+      --    action = "handleMessageButton",
+      --    path = "panels.main[2,5]",
+      --    message = "lights-on",
 
-      },
-      {
-         action = "handleMessageButton",
-         path = "panels.main[5,5]",
-         message = "ping",
-      },
-      {
-         action = "handleMessageButton",
-         path = "panels.main[8,5]",
-         message = "lights-out"
-      },
-      {
-         action = "handleMessageButton",
-         path = "panels.panel2[1,5]",
-         message = "panic"
-      },
-      {
-         action = "handleMessageButton",
-         path = "panels.panel2[5,5]",
-         message = "get-info"
-      },
-      {
-         action = "handleMessageButton",
-         path = "panels.panel2[9,5]",
-         message = "button6"
-      },
+      -- },
+      -- {
+      --    action = "handleMessageButton",
+      --    path = "panels.main[5,5]",
+      --    message = "ping",
+      -- },
+      -- {
+      --    action = "handleMessageButton",
+      --    path = "panels.main[8,5]",
+      --    message = "lights-out"
+      -- },
+      -- {
+      --    action = "handleMessageButton",
+      --    path = "panels.panel2[1,5]",
+      --    message = "panic"
+      -- },
+      -- {
+      --    action = "handleMessageButton",
+      --    path = "panels.panel2[5,5]",
+      --    message = "get-info"
+      -- },
+      -- {
+      --    action = "handleMessageButton",
+      --    path = "panels.panel2[9,5]",
+      --    message = "button6"
+      -- },
 
    },
 

@@ -8,7 +8,10 @@
    [satisfactory.config :refer [env]]
    [satisfactory.queue :as sq]
    [taoensso.timbre :as timbre])
-  (:import (java.io PushbackReader)))
+  (:import (java.io PushbackReader)
+           (java.io File)
+           (org.apache.commons.io FileUtils)
+           ))
 
 (defn format-table
   [data]
@@ -122,5 +125,28 @@
 
 (defn list-local-files
   []
-  (let [f (io/file "/home/duck/projects/satisfactory-network")]
+  (let [f (io/file "/home/duck/projects/satisfactory-network/src/lua")]
     (file-seq f)))
+
+(defn copy-files
+  []
+  (let [src-path "/home/duck/projects/satisfactory-network/src/lua"
+        src (io/file src-path)
+        dest (io/file (env :computer))]
+    (doseq [f (list-local-files)]
+      (Thread/sleep 500)
+      (when (not= (.getPath f) src-path)
+        (let [name (.getName f)
+              dest-name (io/file dest name)]
+          (if (.isDirectory f)
+            (.mkdirs dest-name)
+            (if (.exists f)
+              (when (not (FileUtils/contentEquals
+                        f dest-name))
+                (timbre/infof "Updating file: %s" name)
+                (io/copy f dest-name))
+              (do
+                (timbre/infof "Creating file: %s" name)
+                (io/copy f dest-name)))))))
+
+    #_(io/copy src dest)))

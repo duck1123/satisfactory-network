@@ -13,19 +13,25 @@ fsuTypes = {
    other = 2,
 }
 
+print("Starting main4")
+
 actions.doProcessInbox()
+
+print("inbox done")
 
 while true do
    computer.skip()
    eventName, c, arg1, arg2, arg3 = event.pull()
 
+   print(eventName)
+
    if eventName ~= nil then
-      -- print(
-      --    string.format(
-      --       "mainloop eventName = %s, c = %s, arg1 = %s, arg2 = %s, arg3 = %s",
-      --       eventName, c, arg1, arg2, arg3
-      --    )
-      -- )
+      print(
+         string.format(
+            "mainloop eventName = %s, c = %s, arg1 = %s, arg2 = %s, arg3 = %s",
+            eventName, c, arg1, arg2, arg3
+         )
+      )
 
       actions.doProcessInbox()
 
