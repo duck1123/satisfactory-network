@@ -1,24 +1,24 @@
 (ns satisfactory.core
   (:require
    [satisfactory.file-handler :as fh]
-    [satisfactory.handler :as handler]
-    [satisfactory.nrepl :as nrepl]
-    [luminus.http-server :as http]
-    [satisfactory.config :refer [env]]
-    [clojure.tools.cli :refer [parse-opts]]
-    [clojure.tools.logging :as log]
-    [mount.core :as mount]
-    [taoensso.timbre :as timbre]
-    [watch.man :as wm])
+   [satisfactory.handler :as handler]
+   [satisfactory.nrepl :as nrepl]
+   [luminus.http-server :as http]
+   [satisfactory.config :refer [env]]
+   [clojure.tools.cli :refer [parse-opts]]
+   [clojure.tools.logging :as log]
+   [mount.core :as mount]
+   [taoensso.timbre :as timbre]
+   [watch.man :as wm])
   (:gen-class))
 
 ;; log uncaught exceptions in threads
 (Thread/setDefaultUncaughtExceptionHandler
-  (reify Thread$UncaughtExceptionHandler
-    (uncaughtException [_ thread ex]
-      (log/error {:what :uncaught-exception
-                  :exception ex
-                  :where (str "Uncaught exception on" (.getName thread))}))))
+ (reify Thread$UncaughtExceptionHandler
+   (uncaughtException [_ thread ex]
+     (log/error {:what :uncaught-exception
+                 :exception ex
+                 :where (str "Uncaught exception on" (.getName thread))}))))
 
 (def cli-options
   [["-p" "--port PORT" "Port number"
@@ -27,10 +27,10 @@
 (mount/defstate ^{:on-reload :noop} http-server
   :start
   (http/start
-    (-> env
-        (update :io-threads #(or % (* 2 (.availableProcessors (Runtime/getRuntime)))))
-        (assoc  :handler (handler/app))
-        (update :port #(or (-> env :options :port) %))))
+   (-> env
+       (update :io-threads #(or % (* 2 (.availableProcessors (Runtime/getRuntime)))))
+       (assoc  :handler (handler/app))
+       (update :port #(or (-> env :options :port) %))))
   :stop
   (http/stop http-server))
 

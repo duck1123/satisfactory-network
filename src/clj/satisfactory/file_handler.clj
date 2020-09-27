@@ -75,7 +75,7 @@
     (let [id "random-id"
           d (get @sq/pending-messages id)]
       (swap! sq/component-ids (constantly (sort ids)))
-         (when d (md/success! d ids)))))
+      (when d (md/success! d ids)))))
 
 (defn handle-get-info
   [_file data]
