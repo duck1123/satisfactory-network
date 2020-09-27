@@ -37,17 +37,17 @@ while true do
          if arg1 == fsuSignals.change and arg3 == fsuTypes.file then
             events.reloadSystem()
          end
-      else
 
-         if eventName == "Trigger" then
-            local def = findButtonDef(registeredButtons, c)
-            events.handleButtonTrigger(eventName, c, arg1, def)
+         if arg1 == fsuSignals.add then
+            print("File added")
+            computer.skip()
+            actions.doProcessInbox()
          end
-
-         computer.skip()
-         actions.doProcessInbox()
-
       end
 
+      if eventName == "Trigger" then
+         local def = findButtonDef(registeredButtons, c)
+         events.handleButtonTrigger(eventName, c, arg1, def)
+      end
    end
 end
