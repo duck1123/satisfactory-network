@@ -135,6 +135,19 @@ actions = {
 
       local response = actions.getComponentInfo(id)
 
+      print(
+         string.format(
+            "got component. id = %s",
+            id
+         )
+      )
+
+      -- -- print("foo")
+
+      -- inspect.table(response)
+
+      -- print(response)
+
       if response ~= nil then
          io.addCommand("get-component-response", response)
       end
@@ -145,7 +158,7 @@ actions = {
 
       print(
          string.format(
-            "getting component. id = %s",
+            "getting component info. id = %s",
             id
          )
       )
@@ -163,67 +176,67 @@ actions = {
          for _, t in pairs(types) do
             -- print(t)
 
-            if t == "Factory" then
-               response.progress = c.progress
-               response.powerConsumProducing = c.powerConsumProducing
-               response.productivity = c.productivity
-               response.cycleTime = c.cycleTime
-               response.maxPotential = c.maxPotential
-               response.minPotential = c.minPotential
-               response.potential = c.potential
-               response.standby = c.standby
+            -- if t == "Factory" then
+            --    response.progress = c.progress
+            --    response.powerConsumProducing = c.powerConsumProducing
+            --    response.productivity = c.productivity
+            --    response.cycleTime = c.cycleTime
+            --    response.maxPotential = c.maxPotential
+            --    response.minPotential = c.minPotential
+            --    response.potential = c.potential
+            --    response.standby = c.standby
 
-               local inventories = c:getInventories()
+            --    local inventories = c:getInventories()
 
-               local inventoriesTable = {}
-               for _, inventory in pairs(inventories) do
-                  local inventoryTable = {
-                     itemCount = inventory.itemCount,
-                     size = inventory.size
-                  }
+            --    local inventoriesTable = {}
+            --    for _, inventory in pairs(inventories) do
+            --       local inventoryTable = {
+            --          itemCount = inventory.itemCount,
+            --          size = inventory.size
+            --       }
 
-                  local stacksTable = {}
+            --       local stacksTable = {}
 
-                  for x=0, inventory.size - 1 do
-                     local _, stack = inventory:getStack(x)
+            --       for x=0, inventory.size - 1 do
+            --          local _, stack = inventory:getStack(x)
 
-                     if stack ~= nil then
-                        local item = stack.item
+            --          if stack ~= nil then
+            --             local item = stack.item
 
-                        if item ~= nil then
-                           local itemType = item.type
+            --             if item ~= nil then
+            --                local itemType = item.type
 
-                           local stackTable = {
-                              type = itemType:getName(),
-                              count = stack.count,
-                           }
+            --                local stackTable = {
+            --                   type = itemType:getName(),
+            --                   count = stack.count,
+            --                }
 
-                           table.insert(stacksTable, stackTable)
-                        end
-                     end
-                  end
+            --                table.insert(stacksTable, stackTable)
+            --             end
+            --          end
+            --       end
 
-                  inventoryTable.slots = stacksTable
+            --       inventoryTable.slots = stacksTable
 
-                  table.insert(inventoriesTable, inventoryTable)
-                  -- inventoryTable[tostring(a)] = tostring(b)
-               end
+            --       table.insert(inventoriesTable, inventoryTable)
+            --       -- inventoryTable[tostring(a)] = tostring(b)
+            --    end
 
-               response.inventories = inventoriesTable
-            end
+            --    response.inventories = inventoriesTable
+            -- end
 
-            if t == "Manufacturer" then
-               -- print("Getting recipe")
-               local recipe = c:getRecipe();
+            -- if t == "Manufacturer" then
+            --    -- print("Getting recipe")
+            --    local recipe = c:getRecipe();
 
-               local recipeTable = {
-                  name = recipe:getName(),
-                  duration = recipe:getDuration(),
-               }
+            --    local recipeTable = {
+            --       name = recipe:getName(),
+            --       duration = recipe:getDuration(),
+            --    }
 
-               -- inspect.table(recipeTable)
-               response.recipe = recipeTable
-            end
+            --    -- inspect.table(recipeTable)
+            --    response.recipe = recipeTable
+            -- end
 
             if t == "NetworkCard" then
                print("Network Card")
@@ -238,6 +251,8 @@ actions = {
                response.trackPos = table.pack(c:getTrackPos())
             end
          end
+
+         computer.skip()
 
          return response
       else

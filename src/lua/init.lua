@@ -1,6 +1,7 @@
 lastLoad = lastLoad or 0
 
 function init()
+   print("init")
    local now = computer.millis()
    local diff = now - lastLoad
 

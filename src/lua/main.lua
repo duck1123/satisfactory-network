@@ -28,22 +28,26 @@ while true do
    if eventName ~= nil then
       print(
          string.format(
-            "mainloop eventName = %s, c = %s, arg1 = %s, arg2 = %s, arg3 = %s",
+            "mainloop eventName = %s, c = %s, signal = %s, filename = %s, type = %s",
             eventName, c, arg1, arg2, arg3
          )
       )
-
-      actions.doProcessInbox()
 
       if eventName == "FileSystemUpdate" then
          if arg1 == fsuSignals.change and arg3 == fsuTypes.file then
             events.reloadSystem()
          end
+      else
+
+         if eventName == "Trigger" then
+            local def = findButtonDef(registeredButtons, c)
+            events.handleButtonTrigger(eventName, c, arg1, def)
+         end
+
+         computer.skip()
+         actions.doProcessInbox()
+
       end
 
-      if eventName == "Trigger" then
-         local def = findButtonDef(registeredButtons, c)
-         events.handleButtonTrigger(eventName, c, arg1, def)
-      end
    end
 end

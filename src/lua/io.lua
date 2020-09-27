@@ -4,7 +4,10 @@ io = {
    addCommand = function(command, args)
       local response = args
       response.command = command
-      io.addMessage(toEdn(response))
+      local msg = toEdn(response)
+      computer.skip()
+      print(msg)
+      io.addMessage(msg)
    end,
 
    addMessage = function(message)
