@@ -10,6 +10,7 @@
    [taoensso.timbre :as timbre])
   (:import
    (java.io PushbackReader)
+   (java.nio.charset StandardCharsets)
    (java.nio.file Files Path)
    (org.apache.commons.io FileUtils)))
 
@@ -48,28 +49,28 @@
    (merge {:request-id request-id}  args)))
 
 (defn handle-echo
-  [_file data]
+  [_path data]
   (send-message! (get data "command")))
 
 (defn handle-fallback
-  [_file data]
+  [_path data]
   (timbre/info "Handle fallback")
-  (handle-echo _file data))
+  (handle-echo _path data))
 
 (defn handle-ping
-  [_file _lines]
+  [_path _lines]
 
   #_(send-message! "pong"))
 
 (defn handle-get-component-response
-  [_file data]
+  [_path data]
   (let [id (get data "id")
         info (dissoc data "command")]
     (dosync
      (alter sq/component-info assoc id info))))
 
 (defn handle-get-components-response
-  [_file data]
+  [_path data]
   (let [ids (get data "items")
         id "random-id"
         d (get @sq/pending-messages id)]
@@ -77,15 +78,15 @@
     (when d (md/success! d ids))))
 
 (defn handle-get-info
-  [_file _data]
+  [_path _data]
   (timbre/info "get-info"))
 
 (defn handle-panic
-  [_file _data]
+  [_path _data]
   (send-message! "panic"))
 
 (defn handle-rick
-  [_file _data]
+  [_path _data]
   (send-message! "rick"))
 
 (def handlers
@@ -98,19 +99,20 @@
 
 (defn process-file!
   [^Path path]
-  (let [file (io/file path)]
-    (when (.isFile file)
-      (let [message (edn/read (PushbackReader. (io/reader file)))]
-        (timbre/infof "Message: %s" message)
-        (if-let [command (timbre/spy :info (get message "command"))]
-          (do
-            (timbre/infof "%s - %s" (.getName file) command)
-            (let [handler (get handlers command handle-fallback)]
-              (handler file message)))
-          (do (timbre/error "Could not determine command")
-              (puget/cprint message))))
-      (Thread/sleep 500)
-      (.delete file))))
+  (let [name "name" #_(.getName path)
+        message (edn/read (PushbackReader. (Files/newBufferedReader path StandardCharsets/UTF_8)))]
+    (timbre/infof "Message: %s" message)
+    (if-let [command (timbre/spy :info (get message "command"))]
+      (do
+        (timbre/infof "%s - %s" name  command)
+        (let [handler (get handlers command handle-fallback)]
+          (handler path message)))
+      (do (timbre/error "Could not determine command")
+          (puget/cprint message))))
+  (Thread/sleep 500)
+  (.delete (.toFile path))
+
+  )
 
 
 (defn process-messages!
