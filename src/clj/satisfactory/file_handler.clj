@@ -60,7 +60,7 @@
 (defn handle-ping
   [_path _lines]
 
-  #_(send-message! "pong"))
+  (send-message! "pong"))
 
 (defn handle-get-component-response
   [_path data]
@@ -99,20 +99,24 @@
 
 (defn process-file!
   [^Path path]
-  (let [name "name" #_(.getName path)
-        message (edn/read (PushbackReader. (Files/newBufferedReader path StandardCharsets/UTF_8)))]
-    (timbre/infof "Message: %s" message)
-    (if-let [command (timbre/spy :info (get message "command"))]
-      (do
-        (timbre/infof "%s - %s" name  command)
-        (let [handler (get handlers command handle-fallback)]
-          (handler path message)))
-      (do (timbre/error "Could not determine command")
-          (puget/cprint message))))
-  (Thread/sleep 500)
-  (.delete (.toFile path))
-
-  )
+  (timbre/info "processing file")
+  (Thread/sleep 1000)
+  (let [outbox-dir (env :outbox)
+        file (io/file outbox-dir (str path))]
+    (when (.isFile file)
+      (let [name (.getName file)
+            message (edn/read (PushbackReader. (io/reader file)
+                                               #_(Files/newBufferedReader path StandardCharsets/UTF_8)))]
+        (timbre/infof "Message: %s" message)
+        (if-let [command (timbre/spy :info (get message "command"))]
+          (do
+            (timbre/infof "%s - %s" name  command)
+            (let [handler (get handlers command handle-fallback)]
+              (handler path message)))
+          (do (timbre/error "Could not determine command")
+              (puget/cprint message))))
+      (Thread/sleep 1500)
+      (.delete file))))
 
 
 (defn process-messages!
@@ -138,12 +142,16 @@
   (try
     (let [{:keys [types path]} (timbre/spy :info event)]
       (when (some (partial = :create) types)
-        (let [f (io/file path)]
-          (timbre/spy :info f)
-          )
+        (process-file! path)
+        ;; (let [f (io/file path)]
+        ;;   (timbre/spy :info f)
+        ;;   )
 
         (Thread/sleep 1000)
-        (process-messages!)))
+
+        #_(process-messages!)
+
+        ))
     (catch Exception e
       (timbre/error e))))
 
@@ -152,6 +160,14 @@
   (let [c (env :computer)
         f (io/file c)]
     (file-seq f)))
+
+(defn list-outbox
+  []
+  (let [outbox (env :outbox)
+        f (io/file outbox)]
+    (filter
+     #(.isFile %)
+     (file-seq f))))
 
 (defn list-local-files
   []
