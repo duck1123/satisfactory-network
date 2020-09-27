@@ -42,10 +42,10 @@ function registerButtons()
       local pathInfo = parsePath(path)
       local panel = component.proxy(pathInfo.id)
 
-      if panel ~= null then
+      if panel ~= nil then
          local button = panel:getModule(pathInfo.x, pathInfo.y)
 
-         if button ~= null then
+         if button ~= nil then
             event.listen(button)
             registeredButtons[path] = button
          else
@@ -60,19 +60,19 @@ function registerButtons()
 end
 
 function findButtonDef(registeredButtons, button)
-   local matchedPath = null
-   local matchedDef = null
+   local matchedPath = nil
+   local matchedDef = nil
 
    for path, candidateButton in pairs(registeredButtons) do
-      if matchedPath == null and button == candidateButton then
+      if matchedPath == nil and button == candidateButton then
          matchedPath = path
          break
       end
    end
 
-   if matchedPath ~= null then
+   if matchedPath ~= nil then
       for _, def in pairs(registry.buttons) do
-         if matchedDef == null and def.path == matchedPath then
+         if matchedDef == nil and def.path == matchedPath then
             matchedDef = def
             break
          end

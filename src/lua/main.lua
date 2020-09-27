@@ -19,7 +19,7 @@ while true do
    computer.skip()
    eventName, c, arg1, arg2, arg3 = event.pull()
 
-   if eventName ~= null then
+   if eventName ~= nil then
       -- print(
       --    string.format(
       --       "mainloop eventName = %s, c = %s, arg1 = %s, arg2 = %s, arg3 = %s",

@@ -10,13 +10,13 @@ events = {
       --    )
       -- )
 
-      if def ~= null then
+      if def ~= nil then
          local action = def.action
 
-         if action ~= null then
+         if action ~= nil then
             local handler = handlers[action]
 
-            if handler ~= null then
+            if handler ~= nil then
                print(
                   string.format(
                      "Calling handler: %s(%s, %s, %s)",
@@ -50,7 +50,7 @@ events = {
       local currentSegment = {}
       local f = filesystem.loadFile(path)
 
-      if f ~= null then
+      if f ~= nil then
          print(type(f))
 
          if type(f) == "string" then
@@ -60,22 +60,22 @@ events = {
 
          end
 
-         if response ~= null then
+         if response ~= nil then
             inspect.table(response)
 
             local command = response.command
 
-            if command ~= null then
+            if command ~= nil then
                local handler = registry.commands[command]
 
-               if handler ~= null then
+               if handler ~= nil then
                   actions[handler](path, response)
                end
             else
                print("command not specified")
             end
          else
-            print("null")
+            print("nil")
          end
       else
          print("failed to load message")

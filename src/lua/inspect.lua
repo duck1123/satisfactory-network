@@ -103,14 +103,14 @@ inspect = {
    end,
 
    inventories = function(com, verbose)
-      if (verbose == null or verbose) then
+      if (verbose == nil or verbose) then
          print(tostring(com) .. ": ")
       end
 
       local inventories = com:getInventories()
 
       for i, inv in pairs(inventories) do
-         if (verbose == null or verbose) then
+         if (verbose == nil or verbose) then
             print("inventory " .. i .. ": ")
          end
 
@@ -126,10 +126,10 @@ inspect = {
          local msg = "  " .. x .. ": "
          local _, stack = inv:getStack(x)
 
-         if (stack ~= null) then
+         if (stack ~= nil) then
             local item = stack.item
 
-            if (item ~= null) then
+            if (item ~= nil) then
                msg = msg .. tostring(item.type) .. " - " .. stack.count
             else
                msg = msg .. "no item"

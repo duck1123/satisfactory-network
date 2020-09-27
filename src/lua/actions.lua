@@ -119,7 +119,7 @@ actions = {
       local id = data.id
       local c = component.proxy(id)
 
-      if c ~= null then
+      if c ~= nil then
          local types = c:getTypes()
 
          local response = {
@@ -207,7 +207,7 @@ actions = {
 
          io.addCommand("get-component-response", response)
       else
-         print("c i null")
+         print("c i nil")
       end
    end,
 
