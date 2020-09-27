@@ -10,6 +10,7 @@
    [taoensso.timbre :as timbre])
   (:import
    (java.io PushbackReader)
+   (java.nio.file Files Path)
    (org.apache.commons.io FileUtils)))
 
 (defn format-table
@@ -57,7 +58,8 @@
 
 (defn handle-ping
   [_file _lines]
-  (send-message! "pong"))
+
+  #_(send-message! "pong"))
 
 (defn handle-get-component-response
   [_file data]
@@ -94,6 +96,23 @@
    "get-components-response" handle-get-components-response
    "get-info" handle-get-info})
 
+(defn process-file!
+  [^Path path]
+  (let [file (io/file path)]
+    (when (.isFile file)
+      (let [message (edn/read (PushbackReader. (io/reader file)))]
+        (timbre/infof "Message: %s" message)
+        (if-let [command (timbre/spy :info (get message "command"))]
+          (do
+            (timbre/infof "%s - %s" (.getName file) command)
+            (let [handler (get handlers command handle-fallback)]
+              (handler file message)))
+          (do (timbre/error "Could not determine command")
+              (puget/cprint message))))
+      (Thread/sleep 500)
+      (.delete file))))
+
+
 (defn process-messages!
   []
   (let [outbox-dir (env :outbox)
@@ -109,14 +128,18 @@
                 (handler file message)))
             (do (timbre/error "Could not determine command")
                 (puget/cprint message))))
-        (.delete file)
-        (Thread/sleep 500)))))
+        (Thread/sleep 500)
+        (.delete file)))))
 
 (defn handle-event
   [event]
   (try
-    (let [{:keys [types]} (timbre/spy :info event)]
+    (let [{:keys [types path]} (timbre/spy :info event)]
       (when (some (partial = :create) types)
+        (let [f (io/file path)]
+          (timbre/spy :info f)
+          )
+
         (Thread/sleep 1000)
         (process-messages!)))
     (catch Exception e
