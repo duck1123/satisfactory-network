@@ -115,7 +115,7 @@
               (handler path message)))
           (do (timbre/error "Could not determine command")
               (puget/cprint message))))
-      (Thread/sleep 1500)
+      #_(Thread/sleep 1500)
       (.delete file))))
 
 
