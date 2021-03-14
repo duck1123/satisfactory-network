@@ -16,3 +16,4 @@ profiles.clj
 .nrepl-port
 /node_modules
 /log
+.lsp
